@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Environmental Microclimate Monitoring — Science CPT</title>
+<title>Microclimate Monitoring — Science CPT</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   /* ── Catppuccin Frappe ── */
@@ -241,7 +241,7 @@
     font-weight: 600;
     margin-bottom: 0.4rem;
   }
-  .flow-label { font-size: 0.9rem; font-weight: 600; color: --var(--text); }
+  .flow-label { font-size: 0.9rem; font-weight: 600; color: var(--text); }
   .flow-arrow {
     font-size: 1.5rem;
     color: var(--overlay1);
@@ -342,10 +342,10 @@
 
 <!-- Navigation -->
 <div class="nav">
-  <button class="nav-btn" onclick="prevSlide()">←</button>
+  <button class="nav-btn" onclick="prevSlide()">&#8592;</button>
   <div class="nav-progress"><div class="nav-progress-bar" id="progress"></div></div>
   <span class="nav-count" id="slideNum">1</span>
-  <button class="nav-btn" onclick="nextSlide()">→</button>
+  <button class="nav-btn" onclick="nextSlide()">&#8594;</button>
 </div>
 
 <!-- ═══════════════════════════════════════════
@@ -390,7 +390,7 @@
   </div>
   <div class="reveal reveal-d3" style="margin-top:2rem;">
     <div style="font-size:1.1rem; color:var(--subtext0); max-width:700px; line-height:1.7; text-align:center;">
-      Outside near a pond. Inside next to a running server room. These places <em>feel</em> different — but no one's <span style="color:var(--blue); font-weight:600;">measured</span> the actual difference with real data.
+      Outside near a pond. Inside near running servers. These places <em>feel</em> different — but no one's <span style="color:var(--blue); font-weight:600;">measured</span> the actual difference with real data.
     </div>
   </div>
 </div>
@@ -418,7 +418,7 @@
   </div>
   <div class="reveal reveal-d3" style="margin-top:1.5rem;">
     <p style="color:var(--overlay1); font-size:0.95rem;">
-      Because evaporative cooling affects humidity near water, and electronics generate waste heat.
+      Because evaporation from standing water increases humidity in the surrounding air, and electronics convert electrical energy into waste heat.
     </p>
   </div>
 </div>
@@ -520,32 +520,32 @@
   <div class="reveal reveal-d2">
     <div class="comparison-grid" style="grid-template-columns:repeat(3,1fr);">
       <div class="comp-card">
-        <div class="comp-icon">🖥️</div>
+        <div class="comp-icon">&#128187;</div>
         <div class="comp-title">Raspberry Pi 5</div>
         <div class="comp-sub">Runs Python script to read and log sensor data to CSV</div>
       </div>
       <div class="comp-card">
-        <div class="comp-icon">🌡️</div>
+        <div class="comp-icon">&#127777;&#65039;</div>
         <div class="comp-title">BME280 Sensor</div>
         <div class="comp-sub">Digital sensor — measures temp, humidity, and barometric pressure via I2C</div>
       </div>
       <div class="comp-card">
-        <div class="comp-icon">🔌</div>
+        <div class="comp-icon">&#128268;</div>
         <div class="comp-title">Jumper Wires</div>
         <div class="comp-sub">Connect BME280 to Pi GPIO pins (SDA, SCL, 3.3V, GND)</div>
       </div>
       <div class="comp-card">
-        <div class="comp-icon">📋</div>
+        <div class="comp-icon">&#128203;</div>
         <div class="comp-title">Breadboard</div>
         <div class="comp-sub">Makes wiring clean and easy to set up in the field</div>
       </div>
       <div class="comp-card">
-        <div class="comp-icon">🔋</div>
+        <div class="comp-icon">&#128267;</div>
         <div class="comp-title">Power Bank</div>
         <div class="comp-sub">Portable power for outdoor testing near the pond</div>
       </div>
       <div class="comp-card">
-        <div class="comp-icon">💻</div>
+        <div class="comp-icon">&#128187;</div>
         <div class="comp-title">Laptop / SSH</div>
         <div class="comp-sub">Remote into Pi via SSH to start/stop scripts and retrieve data</div>
       </div>
@@ -563,19 +563,19 @@
   <div class="reveal reveal-d2">
     <div class="comparison-grid">
       <div class="comp-card" style="border-color:rgba(140,170,238,0.3);">
-        <div class="comp-icon">🌊</div>
+        <div class="comp-icon">&#127754;</div>
         <div class="comp-title" style="color:var(--blue);">Pond Edge</div>
         <div class="comp-sub">Outdoor, shaded, near standing water</div>
         <div style="font-size:0.8rem; color:var(--overlay1); margin-top:0.8rem;">Expect: higher humidity, moderate temp</div>
       </div>
       <div class="comp-card" style="border-color:rgba(231,130,132,0.3);">
-        <div class="comp-icon">🖥️</div>
+        <div class="comp-icon">&#128187;</div>
         <div class="comp-title" style="color:var(--red);">Homelab</div>
         <div class="comp-sub">Indoor, near running servers/routers</div>
         <div style="font-size:0.8rem; color:var(--overlay1); margin-top:0.8rem;">Expect: higher temperature, lower humidity</div>
       </div>
       <div class="comp-card" style="border-color:rgba(202,158,230,0.3);">
-        <div class="comp-icon">🏠</div>
+        <div class="comp-icon">&#127968;</div>
         <div class="comp-title" style="color:var(--mauve);">Hallway</div>
         <div class="comp-sub">Indoor, neutral, no major heat/moisture sources</div>
         <div style="font-size:0.8rem; color:var(--overlay1); margin-top:0.8rem;">Expect: baseline / control readings</div>
@@ -597,27 +597,27 @@
         <div class="flow-num">01</div>
         <div class="flow-label">Wire BME280<br>to Pi GPIO</div>
       </div>
-      <div class="flow-arrow">→</div>
+      <div class="flow-arrow">&#8594;</div>
       <div class="flow-step">
         <div class="flow-num">02</div>
         <div class="flow-label">Write &amp; test<br>Python logger</div>
       </div>
-      <div class="flow-arrow">→</div>
+      <div class="flow-arrow">&#8594;</div>
       <div class="flow-step">
         <div class="flow-num">03</div>
         <div class="flow-label">Place at<br>Location 1</div>
       </div>
-      <div class="flow-arrow">→</div>
+      <div class="flow-arrow">&#8594;</div>
       <div class="flow-step">
         <div class="flow-num">04</div>
         <div class="flow-label">Run script<br>for 5 min</div>
       </div>
-      <div class="flow-arrow">→</div>
+      <div class="flow-arrow">&#8594;</div>
       <div class="flow-step">
         <div class="flow-num">05</div>
         <div class="flow-label">Move to<br>Locations 2 &amp; 3</div>
       </div>
-      <div class="flow-arrow">→</div>
+      <div class="flow-arrow">&#8594;</div>
       <div class="flow-step">
         <div class="flow-num">06</div>
         <div class="flow-label">Analyze<br>CSV data</div>
@@ -670,7 +670,7 @@ sensor = Adafruit_BME280_I2C(i2c)
         ])
         time.sleep(INTERVAL)
     
-    <span style="color:var(--blue)">print</span>(<span style="color:var(--peach)">"✅ Data collection complete"</span>)</pre>
+    <span style="color:var(--blue)">print</span>(<span style="color:var(--peach)">&#9989; Data collection complete</span>)</pre>
       </div>
     </div>
   </div>
@@ -690,21 +690,21 @@ sensor = Adafruit_BME280_I2C(i2c)
   <div class="reveal reveal-d2">
     <div class="comparison-grid" style="max-width:1000px;">
       <div class="comp-card">
-        <div class="comp-icon">🌊</div>
+        <div class="comp-icon">&#127754;</div>
         <div class="comp-title">Pond Edge</div>
-        <div class="comp-temp">~18°C</div>
-        <div class="comp-sub">Humidity: higher (70-85%)<br>Water evaporates → moisture in air</div>
+        <div class="comp-temp">~18&#176;C</div>
+        <div class="comp-sub">Humidity: higher (70-85%)<br>Water evaporates &#8594; moisture in air</div>
       </div>
       <div class="comp-card">
-        <div class="comp-icon">🖥️</div>
+        <div class="comp-icon">&#128187;</div>
         <div class="comp-title">Homelab</div>
-        <div class="comp-temp" style="background:linear-gradient(135deg,var(--red),var(--peach));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">~26°C</div>
+        <div class="comp-temp" style="background:linear-gradient(135deg,var(--red),var(--peach));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">~26&#176;C</div>
         <div class="comp-sub">Humidity: lower (30-40%)<br>Electronics generate heat</div>
       </div>
       <div class="comp-card">
-        <div class="comp-icon">🏠</div>
+        <div class="comp-icon">&#127968;</div>
         <div class="comp-title">Hallway (Control)</div>
-        <div class="comp-temp" style="background:linear-gradient(135deg,var(--mauve),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">~21°C</div>
+        <div class="comp-temp" style="background:linear-gradient(135deg,var(--mauve),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">~21&#176;C</div>
         <div class="comp-sub">Humidity: moderate (45-55%)<br>No strong heat/moisture source</div>
       </div>
     </div>
