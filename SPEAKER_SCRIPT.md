@@ -25,7 +25,7 @@
 *"We experience different feelings in different places. But how different are they, really?"*
 
 **Script:**
-> "We've all walked outside near a lake and felt that cool, damp air. Or stood near a running computer and felt the heat coming off it. We *feel* the difference. But here's the thing — nobody in this room can tell me the *actual* numbers. How many degrees different is it? How much more humid?"
+> "We've all walked outside near a lake and felt that cool, damp air. Or stood near running servers and felt the heat coming off them. We *feel* the difference. But here's the thing — nobody in this room can tell me the *actual* numbers. How many degrees different is it? How much more humid?"
 
 > "I wanted to find out. With real data."
 
@@ -41,7 +41,7 @@
 
 > "I predicted that places near water would show higher humidity, and places near electronics would show higher temperature — compared to a neutral indoor spot."
 
-> "The reason is pretty straightforward: water evaporates into the air around a pond, raising humidity. Electronics convert electrical energy into heat. Both of these are things we know — but I wanted to *measure* how much of a difference they actually make."
+> "The reason is pretty straightforward: evaporation releases water vapor into the air around a pond, raising humidity. Electronics convert electrical energy into heat. Both of these are things we know — but I wanted to *measure* how much of a difference they actually make."
 
 ---
 
@@ -168,7 +168,7 @@
 **Script:**
 > "That's really what this project is about. We make assumptions about our environment every day — 'it feels warmer in here' or 'it's more humid outside.' But feelings aren't data."
 
-> "I measured. I compared. I learned."
+> "We measured. We compared. We learned."
 
 > "Thank you. Any questions?"
 
