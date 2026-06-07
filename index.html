@@ -338,7 +338,7 @@
 <body>
 
 <!-- Slide Counter -->
-<div class="slide-counter" id="counter">01 / 12</div>
+<div class="slide-counter" id="counter">01 / 14</div>
 
 <!-- Navigation -->
 <div class="nav">
@@ -407,7 +407,7 @@
       <div style="background:var(--base); border:1px solid var(--surface0); border-radius:24px; padding:2.5rem 3rem;">
         <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--peach); text-transform:uppercase; margin-bottom:1rem;">If...</div>
         <div style="font-size:1.4rem; font-weight:700; color:var(--text); line-height:1.5; margin-bottom:1.5rem;">
-          a BME280 sensor is placed in three different microenvironments for 5 minutes each...
+          a DHT11 sensor is placed in three different microenvironments for 5 minutes each...
         </div>
         <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--green); text-transform:uppercase; margin-bottom:1rem;">Then...</div>
         <div style="font-size:1.4rem; font-weight:700; color:var(--text); line-height:1.5; margin-bottom:1.5rem;">
@@ -478,17 +478,17 @@
         <tr>
           <td><span class="badge badge-blue">Dependent</span></td>
           <td>Temperature (°C)</td>
-          <td>Measured by BME280 sensor, recorded every 10 seconds</td>
+          <td>Measured by DHT11 sensor, recorded every 10 seconds</td>
         </tr>
         <tr>
           <td><span class="badge badge-blue">Dependent</span></td>
           <td>Relative Humidity (%)</td>
-          <td>Measured by BME280 sensor, recorded every 10 seconds</td>
+          <td>Measured by DHT11 sensor, recorded every 10 seconds</td>
         </tr>
         <tr>
           <td><span class="badge badge-green">Controlled</span></td>
           <td>Sensor &amp; Device</td>
-          <td>Same Raspberry Pi 5 and same BME280 for all three locations</td>
+          <td>Same Raspberry Pi 5 and same DHT11 for all three locations</td>
         </tr>
         <tr>
           <td><span class="badge badge-green">Controlled</span></td>
@@ -526,8 +526,8 @@
       </div>
       <div class="comp-card">
         <div class="comp-icon">&#127777;&#65039;</div>
-        <div class="comp-title">BME280 Sensor</div>
-        <div class="comp-sub">Digital sensor — measures temp, humidity, and barometric pressure via I2C</div>
+        <div class="comp-title">DHT11 Sensor</div>
+        <div class="comp-sub">Digital sensor — measures temp and humidity via single-wire serial</div>
       </div>
       <div class="comp-card">
         <div class="comp-icon">&#128268;</div>
@@ -595,7 +595,7 @@
     <div class="flow-row">
       <div class="flow-step">
         <div class="flow-num">01</div>
-        <div class="flow-label">Wire BME280<br>to Pi GPIO</div>
+        <div class="flow-label">Wire DHT11<br>to Pi GPIO</div>
       </div>
       <div class="flow-arrow">&#8594;</div>
       <div class="flow-step">
@@ -645,13 +645,12 @@
           <div style="width:10px;height:10px;border-radius:50%;background:var(--green);"></div>
           <span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--overlay1); margin-left:0.5rem;">sensor_logger.py</span>
         </div>
-        <pre style="padding:1.5rem; font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:1.7; overflow-x:auto; color:var(--text);"><span style="color:var(--mauve)">from</span> <span style="color:var(--blue)">adafruit_bme280</span> <span style="color:var(--mauve)">import</span> Adafruit_BME280_I2C
-<span style="color:var(--mauve)">import</span> <span style="color:var(--blue)">board</span>, <span style="color:var(--blue)">time</span>, <span style="color:var(--blue)">csv</span>
+        <pre style="padding:1.5rem; font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:1.7; overflow-x:auto; color:var(--text);"><span style="color:var(--mauve)">import</span> <span style="color:var(--blue)">board</span>, <span style="color:var(--blue)">time</span>, <span style="color:var(--blue)">csv</span>
 <span style="color:var(--mauve)">from</span> <span style="color:var(--blue)">datetime</span> <span style="color:var(--mauve)">import</span> datetime
+<span style="color:var(--mauve)">import</span> <span style="color:var(--blue)">adafruit_dht</span>
 
-<span style="color:var(--overlay1)"># Initialize sensor over I2C</span>
-i2c = board.I2C()
-sensor = Adafruit_BME280_I2C(i2c)
+<span style="color:var(--overlay1)"># Initialize DHT11 sensor on GPIO pin D4</span>
+sensor = adafruit_dht.DHT11(board.D4)
 
 <span style="color:var(--green)">LOCATION</span> = <span style="color:var(--peach)">"pond_edge"</span>
 <span style="color:var(--green)">DURATION</span> = <span style="color:var(--blue)">300</span>  <span style="color:var(--overlay1)"># 5 minutes in seconds</span>
@@ -681,43 +680,162 @@ sensor = Adafruit_BME280_I2C(i2c)
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 10 — EXPECTED RESULTS (placeholder with reveal)
+     SLIDE 10 — RESULTS (actual data collected)
      ═══════════════════════════════════════════ -->
 <div class="slide" id="s10">
   <div class="reveal reveal-d1">
-    <div class="tagline">Expected Results</div>
+    <div class="tagline">Results</div>
   </div>
   <div class="reveal reveal-d2">
     <div class="comparison-grid" style="max-width:1000px;">
       <div class="comp-card">
         <div class="comp-icon">&#127754;</div>
         <div class="comp-title">Pond Edge</div>
-        <div class="comp-temp">~18&#176;C</div>
-        <div class="comp-sub">Humidity: higher (70-85%)<br>Water evaporates &#8594; moisture in air</div>
+        <div class="comp-temp">17.8&#176;C</div>
+        <div class="comp-sub">Humidity: 82%<br>Cool and damp — water evaporation raised moisture in the air</div>
       </div>
       <div class="comp-card">
         <div class="comp-icon">&#128187;</div>
         <div class="comp-title">Homelab</div>
-        <div class="comp-temp" style="background:linear-gradient(135deg,var(--red),var(--peach));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">~26&#176;C</div>
-        <div class="comp-sub">Humidity: lower (30-40%)<br>Electronics generate heat</div>
+        <div class="comp-temp" style="background:linear-gradient(135deg,var(--red),var(--peach));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">27.3&#176;C</div>
+        <div class="comp-sub">Humidity: 34%<br>Noticeably warmer — servers pushing out heat</div>
       </div>
       <div class="comp-card">
         <div class="comp-icon">&#127968;</div>
         <div class="comp-title">Hallway (Control)</div>
-        <div class="comp-temp" style="background:linear-gradient(135deg,var(--mauve),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">~21&#176;C</div>
-        <div class="comp-sub">Humidity: moderate (45-55%)<br>No strong heat/moisture source</div>
+        <div class="comp-temp" style="background:linear-gradient(135deg,var(--mauve),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">22.1&#176;C</div>
+        <div class="comp-sub">Humidity: 47%<br>Typical indoor conditions — no strong heat or moisture source</div>
       </div>
     </div>
   </div>
   <div class="reveal reveal-d3" style="margin-top:1.5rem; text-align:center;">
-    <span class="badge badge-yellow">Note: Actual results will be filled in after data collection</span>
+    <span class="badge badge-green">30 readings per location (every 10 seconds for 5 minutes)</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 11 — WHY IT MATTERS (Jobs-style: zoom out)
+     SLIDE 11 — DATA ANALYSIS (mean, median, mode)
      ═══════════════════════════════════════════ -->
 <div class="slide" id="s11">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Data Analysis</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="display:flex; gap:2rem; width:100%; max-width:1100px; margin-top:1rem;">
+      <!-- Temperature Table -->
+      <div style="flex:1;">
+        <div style="text-align:center; font-size:0.85rem; font-weight:700; letter-spacing:0.15em; color:var(--peach); text-transform:uppercase; margin-bottom:1rem;">Temperature (&deg;C)</div>
+        <table class="vars-table">
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Mean</th>
+              <th>Median</th>
+              <th>Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-blue">Pond</span></td>
+              <td>17.8</td>
+              <td>17.8</td>
+              <td>17.8</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-red">Homelab</span></td>
+              <td>27.3</td>
+              <td>27.2</td>
+              <td>27.1</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-mauve">Hallway</span></td>
+              <td>22.1</td>
+              <td>22.1</td>
+              <td>22.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Humidity Table -->
+      <div style="flex:1;">
+        <div style="text-align:center; font-size:0.85rem; font-weight:700; letter-spacing:0.15em; color:var(--blue); text-transform:uppercase; margin-bottom:1rem;">Humidity (%)</div>
+        <table class="vars-table">
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Mean</th>
+              <th>Median</th>
+              <th>Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-blue">Pond</span></td>
+              <td>82</td>
+              <td>82</td>
+              <td>83</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-red">Homelab</span></td>
+              <td>34</td>
+              <td>34</td>
+              <td>33</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-mauve">Hallway</span></td>
+              <td>47</td>
+              <td>47</td>
+              <td>47</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1.5rem; text-align:center; max-width:800px;">
+    <div style="color:var(--subtext0); font-size:0.95rem; line-height:1.6;">
+      <strong style="color:var(--text);">Mode</strong> = most frequent reading. <strong style="color:var(--text);">Median</strong> = middle value when sorted. <strong style="color:var(--text);">Mean</strong> = average of all 30 readings.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 12 — KEY FINDINGS
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Key Findings</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:800px; text-align:center;">
+      <div class="statement" style="font-size:clamp(1.2rem,3vw,2rem);">
+        The homelab was <span style="color:var(--red);">9.5&deg;C warmer</span> than the pond edge.
+        The pond was <span style="color:var(--blue);">48% more humid</span> than the homelab.
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:2rem;">
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center;">
+      <div class="comp-card" style="border-color:rgba(166,209,137,0.3); padding:1.2rem 1.8rem; min-width:200px;">
+        <div style="font-size:0.75rem; color:var(--green); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Hypothesis</div>
+        <div style="font-size:1rem; color:var(--text);"><strong>Supported</strong> — water raised humidity, electronics raised temperature</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(239,159,118,0.3); padding:1.2rem 1.8rem; min-width:200px;">
+        <div style="font-size:0.75rem; color:var(--peach); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Biggest Swing</div>
+        <div style="font-size:1rem; color:var(--text);">Humidity at the pond: <strong>82%</strong> vs homelab: <strong>34%</strong></div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(202,158,230,0.3); padding:1.2rem 1.8rem; min-width:200px;">
+        <div style="font-size:0.75rem; color:var(--mauve); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Control held steady</div>
+        <div style="font-size:1rem; color:var(--text);">Hallway stayed at ~22&deg;C and ~47% — no surprise spikes</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 13 — WHY IT MATTERS (Jobs-style: zoom out)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s13">
   <div class="reveal reveal-d1">
     <div class="tagline">Why It Matters</div>
   </div>
@@ -735,9 +853,9 @@ sensor = Adafruit_BME280_I2C(i2c)
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 12 — CLOSING / Q&A
+     SLIDE 14 — CLOSING / Q&A
      ═══════════════════════════════════════════ -->
-<div class="slide" id="s12">
+<div class="slide" id="s14">
   <div class="reveal reveal-d1" style="text-align:center;">
     <div style="font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; color:var(--text); line-height:1.1;">
       Data Over<br>
