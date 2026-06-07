@@ -338,7 +338,7 @@
 <body>
 
 <!-- Slide Counter -->
-<div class="slide-counter" id="counter">01 / 14</div>
+<div class="slide-counter" id="counter">01 / 15</div>
 
 <!-- Navigation -->
 <div class="nav">
@@ -418,7 +418,7 @@
   </div>
   <div class="reveal reveal-d3" style="margin-top:1.5rem;">
     <p style="color:var(--overlay1); font-size:0.95rem;">
-      Because evaporation from standing water increases humidity in the surrounding air, and electronics convert electrical energy into waste heat.
+      Because water evaporates into the surrounding air, increasing humidity near the pond, and electronics convert electrical energy into waste heat, raising local temperature.
     </p>
   </div>
 </div>
@@ -833,9 +833,41 @@ sensor = adafruit_dht.DHT11(board.D4)
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 13 — WHY IT MATTERS (Jobs-style: zoom out)
+     SLIDE 13 — LIMITATIONS & ERROR ANALYSIS
      ═══════════════════════════════════════════ -->
 <div class="slide" id="s13">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Limitations & Sources of Error</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; max-width:900px;">
+      <div class="comp-card" style="border-color:rgba(231,130,130,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--red); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Sensor Accuracy</div>
+        <div style="font-size:0.9rem; color:var(--text);">DHT11 has &plusmn;2&deg;C and &plusmn;5% RH margin of error. Real readings could shift by this much in either direction.</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(239,159,118,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--peach); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Short Sampling</div>
+        <div style="font-size:0.9rem; color:var(--text);">Only 5 minutes per location. A longer window would catch fluctuations — like servers ramping up or wind shifting.</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(202,158,230,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--mauve); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Single Time Point</div>
+        <div style="font-size:0.9rem; color:var(--text);">All tests done in one 20-minute window. Time of day, sunlight, and weather all affect microclimates.</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(140,170,238,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--blue); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">What I'd Do Differently</div>
+        <div style="font-size:0.9rem; color:var(--text);">Longer sampling (30+ min), multiple days, more locations, and a backup sensor to cross-check readings.</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1.5rem; text-align:center;">
+    <span class="badge badge-yellow">Being honest about limitations is part of science — it shows you understand the method, not just the result.</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 14 — WHY IT MATTERS (Jobs-style: zoom out)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s14">
   <div class="reveal reveal-d1">
     <div class="tagline">Why It Matters</div>
   </div>
@@ -845,17 +877,18 @@ sensor = adafruit_dht.DHT11(board.D4)
     </div>
   </div>
   <div class="reveal reveal-d3" style="margin-top:2rem;">
-    <div style="max-width:750px; text-align:center; color:var(--subtext0); font-size:1.1rem; line-height:1.8;">
-      Server rooms need cooling. Greenhouses need humidity. Homes need ventilation.<br><br>
-      Understanding <span style="color:var(--mauve); font-weight:600;">microclimates with real data</span> helps us make better decisions about where to put things — from plants to computers to people.
+    <div style="max-width:800px; text-align:center; color:var(--subtext0); font-size:1.1rem; line-height:1.8;">
+      Server rooms that overheat cost companies millions in cooling. A 9.5&deg;C swing between two rooms in the same building shows why sensor placement matters. Even a 2&deg;C difference affects hardware failure rates.<br><br>
+      Greenhouses need 60-80% humidity for most crops &mdash; our pond edge hit 82%. Homes need 30-50% for comfort and to prevent mold &mdash; our hallway sat at 47%.<br><br>
+      Understanding <span style="color:var(--mauve); font-weight:600;">microclimates with real data</span> helps us make better decisions about where to put things &mdash; from plants to computers to people.
     </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 14 — CLOSING / Q&A
+     SLIDE 15 — CLOSING / Q&A
      ═══════════════════════════════════════════ -->
-<div class="slide" id="s14">
+<div class="slide" id="s15">
   <div class="reveal reveal-d1" style="text-align:center;">
     <div style="font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; color:var(--text); line-height:1.1;">
       Data Over<br>
