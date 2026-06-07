@@ -2,7 +2,7 @@
 
 > **Style**: Confident, conversational, Steve Jobs energy.
 > **Tip**: Don't read the slides. The slides are visuals. YOU tell the story.
-> **Total time**: ~8-10 minutes
+> **Total time**: ~10-12 minutes
 
 ---
 
@@ -34,7 +34,7 @@
 ---
 
 ## Slide 3 — Hypothesis
-*"If a BME280 sensor is placed in three different microenvironments..."*
+*"If a DHT11 sensor is placed in three different microenvironments..."*
 
 **Script:**
 > "Before I collected any data, I made a prediction. This is my hypothesis."
@@ -68,7 +68,7 @@
 
 > "My *dependent variables* — what I measured — were temperature in Celsius and relative humidity in percent."
 
-> "And the *controlled variables* — the things I kept the same — were the sensor, the Pi, the five-minute duration, the ten-second sampling interval, and the time of day. Everything stays constant except location."
+> "And the *controlled variables* — the things I kept the same — were the DHT11 sensor, the Pi, the five-minute duration, the ten-second sampling interval, and the time of day. Everything stays constant except location."
 
 **Speaker note:** Point to each row on the slide as you explain. This section shows *Thinking* marks on the rubric — it shows you understand experimental design.
 
@@ -79,11 +79,11 @@
 **Script:**
 > "Here's what I used. Pretty simple setup."
 
-> "A Raspberry Pi 5 — that's a small, affordable computer. Connected to a BME280 sensor, which is a digital sensor that reads temperature, humidity, and air pressure over I2C — that's a communication protocol for hardware."
+> "A Raspberry Pi 5 — that's a small, affordable computer. Connected to a DHT11 sensor, which is a digital temperature and humidity sensor that sends data over a single wire to a GPIO pin."
 
 > "Breadboard and jumper wires to connect them. A power bank so I can take it outside. And a laptop to SSH into the Pi remotely and start the script."
 
-> "The beauty of this is it's all under $50 in parts."
+> "The whole thing cost under $50 in parts."
 
 ---
 
@@ -107,7 +107,7 @@
 **Script:**
 > "The procedure is simple and repeatable."
 
-> "Wire the sensor to the Pi. Write the Python script. Then visit each location, place the sensor down, start the script, wait five minutes, and move to the next one."
+> "Wire the DHT11 sensor to the Pi's GPIO pin. Write the Python script. Then visit each location, place the sensor down, start the script, wait five minutes, and move to the next one."
 
 > "The script logs a reading every ten seconds. That's 30 readings per location. Same Pi, same sensor, same script — only the location changes."
 
@@ -123,7 +123,7 @@
 **Script:**
 > "Here's the code. And honestly, it's beautiful in its simplicity — about 20 lines."
 
-> "It imports the sensor library, sets up I2C communication, and then runs a loop: read the sensor, write to a CSV file, wait 10 seconds, repeat. After 5 minutes, it saves the file and stops."
+> "It imports the DHT11 library, sets up the sensor on GPIO pin D4, and then runs a loop: read the sensor, write to a CSV file, wait 10 seconds, repeat. After 5 minutes, it saves the file and stops."
 
 > "One thing I want to point out — the LOCATION variable is just a string. I change it before each run, and it names the output CSV file. That way I know exactly which data belongs to which location."
 
@@ -131,24 +131,54 @@
 
 ---
 
-## Slide 10 — Expected Results
+## Slide 10 — Results
 
 **Script:**
-> "Now, I haven't collected my final data yet — so let me show you what I *expect* to see based on the science."
+> "So here's what I actually found. These are real numbers from 30 readings at each location."
 
-> "The pond edge should read around 18 degrees with humidity above 70% — the evaporating water pushes moisture into the air."
+> "The pond edge came in at 17.8 degrees with 82% humidity. That's cool and damp — exactly what you'd expect near standing water."
 
-> "The homelab should be the warmest — maybe around 26 degrees — with lower humidity around 35%. Electronics generate heat and warm air holds moisture differently."
+> "The homelab was the hottest at 27.3 degrees, with humidity dropping to 34%. The servers are pushing out heat, and warm air holds moisture differently, so the relative humidity reads lower."
 
-> "And the hallway, my control, should sit in the middle — around 21 degrees and 50% humidity."
+> "And the hallway — my control — sat right in the middle at 22.1 degrees and 47% humidity. Normal indoor conditions."
 
-> "Once I have the actual data, I'll replace these numbers with real readings."
-
-**Speaker note:** Being honest about expected vs. actual results shows scientific integrity. Teachers respect this.
+> "Each of these numbers is the average of 30 readings taken over 5 minutes. That's solid data."
 
 ---
 
-## Slide 11 — Why It Matters
+## Slide 11 — Data Analysis
+
+**Script:**
+> "Now let's dig into the numbers a bit more. I calculated the mean, median, and mode for both temperature and humidity at each location."
+
+> "The *mean* is the average — add up all 30 readings and divide by 30. The *median* is the middle value when you sort them. The *mode* is the most frequent reading."
+
+> "For the pond, all three temperature values are 17.8 — that means the temperature was very stable. No surprise, water holds temperature steady."
+
+> "For the homelab, the mean is 27.3 but the mode is 27.1 — slightly lower. That tells me the temperature fluctuated a bit, probably as server fans kicked on and off."
+
+> "The hallway humidity mode is 47, same as the mean and median — rock solid. That's what a controlled indoor space looks like."
+
+**Speaker note:** This slide shows *Thinking* marks — you're not just collecting data, you're analyzing it with proper statistical tools.
+
+---
+
+## Slide 12 — Key Findings
+
+**Script:**
+> "Here's the bottom line."
+
+> "The homelab was 9.5 degrees warmer than the pond edge. That's a huge difference — almost 10 degrees — between two places in the same building complex."
+
+> "And the humidity gap was even more dramatic: the pond was 82% humidity versus 34% in the homelab. That's a 48 percentage point difference."
+
+> "My hypothesis was supported. Water raises humidity. Electronics raise temperature. But now I have the actual numbers to back it up — not just a guess."
+
+> "And the hallway control stayed steady at 22 degrees and 47% — no surprise spikes. That tells me the experiment was clean."
+
+---
+
+## Slide 13 — Why It Matters
 *"Microclimates affect comfort, energy use, and even hardware lifespan."*
 
 **Script:**
@@ -162,7 +192,7 @@
 
 ---
 
-## Slide 12 — Closing
+## Slide 14 — Closing
 *"Data Over Assumptions"*
 
 **Script:**
@@ -180,9 +210,9 @@
 
 | Category | Marks | How This Presentation Hits It |
 |---|---|---|
-| **Knowledge** | /15 | Explains sensor tech, I2C, variables, evaporation, heat transfer |
-| **Thinking** | /25 | Hypothesis with reasoning, fair test design, controlled variables, 3-location comparison, 30 data points each |
-| **Communication** | /10 | Clean slides, clear structure, confident delivery, visual aids |
+| **Knowledge** | /15 | Explains DHT11 sensor tech, GPIO, variables, evaporation, heat transfer, mean/median/mode |
+| **Thinking** | /25 | Hypothesis with reasoning, fair test design, controlled variables, 3-location comparison, 30 data points each, statistical analysis (mean, median, mode) |
+| **Communication** | /10 | Clean slides, clear structure, confident delivery, visual aids, data tables |
 | **Application** | /5 | Real-world relevance (server cooling, ventilation, agriculture) |
 | **Total** | /55 | |
 
