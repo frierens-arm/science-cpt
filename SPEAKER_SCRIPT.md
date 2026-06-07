@@ -178,13 +178,32 @@
 
 ---
 
-## Slide 13 — Why It Matters
+## Slide 13 — Limitations & Sources of Error
+
+**Script:**
+> "No experiment is perfect, and being honest about limitations is part of science."
+
+> "The DHT11 sensor has a margin of error of plus or minus 2 degrees and plus or minus 5% humidity. So our readings could shift a bit in either direction."
+
+> "We only sampled 5 minutes per location. A longer window would catch more fluctuations — like servers ramping up or wind shifting near the pond."
+
+> "And we tested all three spots in one 20-minute window on one day. Time of day, sunlight, weather — all of these affect microclimates."
+
+> "If I were to redo this, I'd sample for 30 minutes or more, across multiple days, with a backup sensor to cross-check."
+
+**Speaker note:** This slide shows *Thinking* marks — it proves you understand the scientific method, not just the results. Teachers respect students who can critique their own work.
+
+---
+
+## Slide 14 — Why It Matters
 *"Microclimates affect comfort, energy use, and even hardware lifespan."*
 
 **Script:**
 > "So why does any of this matter? It's not just a school project."
 
-> "Server rooms overheat. That costs companies millions in cooling. Plants die when humidity is wrong. People get sick in poorly ventilated spaces."
+> "Server rooms that overheat cost companies millions in cooling. We found a 9.5 degree difference between two rooms in the same building — that's the kind of gap that kills hardware."
+
+> "Greenhouses need 60 to 80 percent humidity for most crops. Our pond edge hit 82 percent. Homes need 30 to 50 percent for comfort and to prevent mold — our hallway sat right at 47 percent."
 
 > "Understanding microclimates with real data helps us make better decisions — about where to put computers, how to ventilate a building, or even where to plant a garden."
 
@@ -192,7 +211,7 @@
 
 ---
 
-## Slide 14 — Closing
+## Slide 15 — Closing
 *"Data Over Assumptions"*
 
 **Script:**
@@ -210,9 +229,9 @@
 
 | Category | Marks | How This Presentation Hits It |
 |---|---|---|
-| **Knowledge** | /15 | Explains DHT11 sensor tech, GPIO, variables, evaporation, heat transfer, mean/median/mode |
-| **Thinking** | /25 | Hypothesis with reasoning, fair test design, controlled variables, 3-location comparison, 30 data points each, statistical analysis (mean, median, mode) |
-| **Communication** | /10 | Clean slides, clear structure, confident delivery, visual aids, data tables |
+| **Knowledge** | /15 | Explains DHT11 sensor tech, GPIO, variables, evaporation/heat transfer, mean/median/mode, sensor accuracy |
+| **Thinking** | /25 | Hypothesis with reasoning, fair test design, controlled variables, 3-location comparison, 30 data points each, statistical analysis (mean, median, mode), limitations & error analysis |
+| **Communication** | /10 | Clean slides, clear structure, confident delivery, visual aids, data tables |\
 | **Application** | /5 | Real-world relevance (server cooling, ventilation, agriculture) |
 | **Total** | /55 | |
 
