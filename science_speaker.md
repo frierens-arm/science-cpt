@@ -81,7 +81,9 @@
 
 > "A Raspberry Pi 5 — that's a small, affordable computer. Connected to a DHT11 sensor, which is a digital temperature and humidity sensor that sends data over a single wire to a GPIO pin."
 
-> "Breadboard and jumper wires to connect them. A power bank so I can take it outside. And a laptop to SSH into the Pi remotely and start the script."
+> "I also added a Unicorn HAT Mini — that's a small LED matrix display that sits on top of the Pi. I programmed it to show the current weather, time, temperature, and humidity. It cycles through all four."
+
+> "Breadboard and jumper wires to connect things. A power bank so I can take it outside. And a laptop to SSH into the Pi remotely and start the script."
 
 > "The whole thing cost under $50 in parts."
 
@@ -189,9 +191,11 @@
 
 > "And we tested all three spots in one 20-minute window on one day. Time of day, sunlight, weather — all of these affect microclimates."
 
+> "One more thing — the DHT11 sensor module actually broke before the demo. So for the live display on the Unicorn HAT Mini, I swapped in the OpenWeatherMap API for temperature. The humidity still comes from the sensor on the display, but temperature is pulling from the weather service instead."
+
 > "If I were to redo this, I'd sample for 30 minutes or more, across multiple days, with a backup sensor to cross-check."
 
-**Speaker note:** This slide shows *Thinking* marks — it proves you understand the scientific method, not just the results. Teachers respect students who can critique their own work.
+**Speaker note:** This slide shows *Thinking* marks — it proves you understand the scientific method, not just the results. Teachers respect students who can critique their own work. Being honest about the broken sensor actually makes you look MORE credible, not less.
 
 ---
 
