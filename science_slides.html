@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microclimate Monitoring — Science CPT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── Catppuccin Frappe ── */
+  :root {
+    --rosewater: #f2d5cf;
+    --flamingo: #eebebe;
+    --pink: #f4b8e4;
+    --mauve: #ca9ee6;
+    --red: #e78284;
+    --maroon: #ea999c;
+    --peach: #ef9f76;
+    --yellow: #e5c890;
+    --green: #a6d189;
+    --teal: #81c8be;
+    --sky: #99d1db;
+    --sapphire: #85c1dc;
+    --blue: #8caaee;
+    --lavender: #babbf1;
+    --text: #c6d0f5;
+    --subtext1: #b5bfe2;
+    --subtext0: #a5adce;
+    --overlay2: #949cbb;
+    --overlay1: #838ba7;
+    --overlay0: #737994;
+    --surface2: #626880;
+    --surface1: #51576d;
+    --surface0: #414559;
+    --base: #303446;
+    --mantle: #292c3c;
+    --crust: #232634;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--crust);
+    color: var(--text);
+  }
+
+  /* ── Slide System ── */
+  .slide {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 6rem;
+    opacity: 0;
+    transform: translateX(80px) scale(0.97);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    overflow-y: auto;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: all;
+    z-index: 10;
+  }
+  .slide.exit-left {
+    opacity: 0;
+    transform: translateX(-60px) scale(0.97);
+  }
+
+  /* ── Typography ── */
+  .tagline {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mauve);
+    margin-bottom: 1rem;
+  }
+  .mega-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .mega-title .accent { color: var(--mauve); }
+  .mega-title .accent-blue { color: var(--blue); }
+  .mega-title .accent-green { color: var(--green); }
+  .mega-title .accent-peach { color: var(--peach); }
+  .subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 300;
+    color: var(--subtext0);
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  .statement {
+    font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.3;
+    max-width: 900px;
+    color: var(--text);
+  }
+
+  /* ── Navigation ── */
+  .nav {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    z-index: 100;
+    background: rgba(35, 38, 52, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 0.6rem 1.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--surface0);
+  }
+  .nav-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--surface2);
+    background: var(--surface0);
+    color: var(--text);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { background: var(--mauve); border-color: var(--mauve); color: var(--crust); }
+  .nav-btn:active { transform: scale(0.92); }
+  .nav-progress {
+    width: 200px; height: 3px;
+    background: var(--surface0);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .nav-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--mauve), var(--blue));
+    border-radius: 999px;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--overlay1);
+    min-width: 45px;
+    text-align: right;
+  }
+
+  /* ── Counter ── */
+  .slide-counter {
+    position: fixed;
+    top: 2rem;
+    right: 6rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--overlay0);
+    z-index: 100;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Content Cards ── */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 2.5rem;
+  }
+  .comp-card {
+    background: var(--base);
+    border: 1px solid var(--surface0);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .comp-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--mauve);
+    box-shadow: 0 20px 40px rgba(202, 158, 230, 0.12);
+  }
+  .comp-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .comp-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .comp-sub {
+    font-size: 0.85rem;
+    color: var(--overlay1);
+    line-height: 1.5;
+  }
+  .comp-temp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, var(--mauve), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ── Flow Diagram ── */
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .flow-step {
+    background: var(--surface0);
+    border: 1px solid var(--surface1);
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+    min-width: 140px;
+    transition: border-color 0.3s;
+  }
+  .flow-step:hover { border-color: var(--green); }
+  .flow-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--green);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .flow-label { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+  .flow-arrow {
+    font-size: 1.5rem;
+    color: var(--overlay1);
+  }
+
+  /* ── Table ── */
+  .vars-table {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 2rem;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+  }
+  .vars-table th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    padding: 0.6rem 1.2rem;
+    text-align: left;
+  }
+  .vars-table td {
+    background: var(--surface0);
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+    color: var(--text);
+    transition: background 0.2s;
+  }
+  .vars-table tr:hover td { background: var(--surface1); }
+  .vars-table td:first-child {
+    border-radius: 12px 0 0 12px;
+    font-weight: 600;
+  }
+  .vars-table td:last-child { border-radius: 0 12px 12px 0; }
+  .badge {
+    display: inline-block;
+    padding: 0.2em 0.7em;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-mauve { background: rgba(202,158,230,0.15); color: var(--mauve); }
+  .badge-blue { background: rgba(140,170,238,0.15); color: var(--blue); }
+  .badge-green { background: rgba(166,209,137,0.15); color: var(--green); }
+  .badge-peach { background: rgba(239,159,118,0.15); color: var(--peach); }
+  .badge-pink { background: rgba(244,184,228,0.15); color: var(--pink); }
+  .badge-yellow { background: rgba(229,200,144,0.15); color: var(--yellow); }
+
+  /* ── Big Number Reveal ── */
+  .big-num-section { display: flex; gap: 3rem; margin-top: 2rem; align-items: center; }
+  .big-num { text-align: center; }
+  .big-num-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--mauve), var(--blue), var(--teal));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.3s;
+  }
+  .big-num-val:hover { transform: scale(1.05); }
+  .big-num-label { font-size: 0.85rem; color: var(--overlay1); margin-top: 0.5rem; }
+
+  /* ── Scrollbar ── */
+  .slide::-webkit-scrollbar { width: 4px; }
+  .slide::-webkit-scrollbar-track { background: transparent; }
+  .slide::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 999px; }
+
+  /* ── Reveal Animation ── */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.25s; }
+  .reveal-d3 { transition-delay: 0.4s; }
+  .reveal-d4 { transition-delay: 0.55s; }
+  .reveal-d5 { transition-delay: 0.7s; }
+  .reveal-d6 { transition-delay: 0.85s; }
+
+  /* ── Q Slide ── */
+  .qa-box {
+    margin-top: 3rem;
+    max-width: 700px;
+    background: var(--surface0);
+    border: 1px solid var(--surface1);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+  }
+  .qa-text { font-size: 1.1rem; color: var(--subtext0); }
+</style>
+</head>
+<body>
+
+<!-- Slide Counter -->
+<div class="slide-counter" id="counter">01 / 16</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button class="nav-btn" onclick="prevSlide()">&#8592;</button>
+  <div class="nav-progress"><div class="nav-progress-bar" id="progress"></div></div>
+  <span class="nav-count" id="slideNum">1</span>
+  <button class="nav-btn" onclick="nextSlide()">&#8594;</button>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 01 — TITLE
+     ═══════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Science CPT — SNC1W1</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div class="micro-conf" style="font-size:0.85rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--sapphire); margin-bottom:0.5rem;">Design Thinking Project</div>
+  </div>
+  <div class="reveal reveal-d3">
+    <h1 class="mega-title">
+      Microclimate<br>
+      <span class="accent">Monitoring</span>
+    </h1>
+  </div>
+  <div class="reveal reveal-d4">
+    <p class="subtitle">
+      How do temperature and humidity change across different environments — measured with a Raspberry Pi and precision sensor.
+    </p>
+  </div>
+  <div class="reveal reveal-d5" style="margin-top:2rem;">
+    <span class="badge badge-mauve">Group Project</span>
+    <span class="badge badge-blue" style="margin-left:0.5rem;">Individual Submission</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 02 — THE PROBLEM (Jobs-style: start with why)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="reveal reveal-d1">
+    <div class="tagline">The Question</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div class="statement">
+      We experience different "feelings" in different places.<br><br>
+      But <span class="accent" style="color:var(--mauve);">how different are they, really?</span>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:2rem;">
+    <div style="font-size:1.1rem; color:var(--subtext0); max-width:700px; line-height:1.7; text-align:center;">
+      Outside near a pond. Inside near running servers. These places <em>feel</em> different — but no one's <span style="color:var(--blue); font-weight:600;">measured</span> the actual difference with real data.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 03 — HYPOTHESIS
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Hypothesis</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:800px; text-align:center;">
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:24px; padding:2.5rem 3rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--peach); text-transform:uppercase; margin-bottom:1rem;">If...</div>
+        <div style="font-size:1.4rem; font-weight:700; color:var(--text); line-height:1.5; margin-bottom:1.5rem;">
+          a DHT11 sensor is placed in three different microenvironments for 5 minutes each...
+        </div>
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--green); text-transform:uppercase; margin-bottom:1rem;">Then...</div>
+        <div style="font-size:1.4rem; font-weight:700; color:var(--text); line-height:1.5; margin-bottom:1.5rem;">
+          the readings will show that areas near water have higher humidity, and areas near electronics have higher temperature, compared to a neutral indoor location.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1.5rem;">
+    <p style="color:var(--overlay1); font-size:0.95rem;">
+      Because water evaporates into the surrounding air, increasing humidity near the pond, and electronics convert electrical energy into waste heat, raising local temperature.
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 04 — RESEARCH QUESTION (direct, testable)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Research Question</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:900px; text-align:center;">
+      <div style="font-size:clamp(1.6rem,4vw,2.8rem); font-weight:800; color:var(--text); line-height:1.3;">
+        How do <span style="color:var(--peach);">temperature</span> and <span style="color:var(--blue);">humidity</span> readings vary across three different microenvironments — <span style="color:var(--green);">outdoor near water</span>, <span style="color:var(--red);">indoor near electronics</span>, and a <span style="color:var(--mauve);">neutral indoor location</span> — over equal 5-minute sampling periods?
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3 big-num-section" style="justify-content:center;">
+    <div class="big-num">
+      <div class="big-num-val" style="font-size:clamp(2rem,4vw,3.5rem);">3</div>
+      <div class="big-num-label">Locations</div>
+    </div>
+    <div class="big-num">
+      <div class="big-num-val" style="font-size:clamp(2rem,4vw,3.5rem);">5 min</div>
+      <div class="big-num-label">Each</div>
+    </div>
+    <div class="big-num">
+      <div class="big-num-val" style="font-size:clamp(2rem,4vw,3.5rem);">2</div>
+      <div class="big-num-label">Variables</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 05 — VARIABLES TABLE
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Variables</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <table class="vars-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Variable</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-mauve">Independent</span></td>
+          <td>Location / Microenvironment</td>
+          <td>Pond edge (outdoor, near water), Homelab (indoor, near servers), Hallway (indoor, neutral)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-blue">Dependent</span></td>
+          <td>Temperature (°C)</td>
+          <td>Measured by DHT11 sensor, recorded every 10 seconds</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-blue">Dependent</span></td>
+          <td>Relative Humidity (%)</td>
+          <td>Measured by DHT11 sensor, recorded every 10 seconds</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">Controlled</span></td>
+          <td>Sensor &amp; Device</td>
+          <td>Same Raspberry Pi 5 and same DHT11 for all three locations</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">Controlled</span></td>
+          <td>Sampling Duration</td>
+          <td>Exactly 5 minutes per location</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">Controlled</span></td>
+          <td>Sampling Interval</td>
+          <td>Reading taken every 10 seconds (30 readings per location)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-peach">Controlled</span></td>
+          <td>Time of Day</td>
+          <td>All three locations tested within the same 20-minute window</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 06 — EQUIPMENT
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Equipment</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div class="comparison-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="comp-card">
+        <div class="comp-icon">&#128187;</div>
+        <div class="comp-title">Raspberry Pi 5</div>
+        <div class="comp-sub">Runs Python script to read and log sensor data to CSV</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">&#127777;&#65039;</div>
+        <div class="comp-title">DHT11 Sensor</div>
+        <div class="comp-sub">Digital sensor — measures temp and humidity via single-wire serial</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">&#128268;</div>
+        <div class="comp-title">Jumper Wires</div>
+        <div class="comp-sub">Connect DHT11 to Pi GPIO (Data, 3.3V, GND)</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">&#128203;</div>
+        <div class="comp-title">Breadboard</div>
+        <div class="comp-sub">Makes wiring clean and easy to set up in the field</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">&#128267;</div>
+        <div class="comp-title">Power Bank</div>
+        <div class="comp-sub">Portable power for outdoor testing near the pond</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">&#128187;</div>
+        <div class="comp-title">Laptop / SSH</div>
+        <div class="comp-sub">Remote into Pi via SSH to start/stop scripts and retrieve data</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 07 — 3 LOCATIONS COMPARED
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="reveal reveal-d1">
+    <div class="tagline">The Three Locations</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div class="comparison-grid">
+      <div class="comp-card" style="border-color:rgba(140,170,238,0.3);">
+        <div class="comp-icon">&#127754;</div>
+        <div class="comp-title" style="color:var(--blue);">Pond Edge</div>
+        <div class="comp-sub">Outdoor, shaded, near standing water</div>
+        <div style="font-size:0.8rem; color:var(--overlay1); margin-top:0.8rem;">Expect: higher humidity, moderate temp</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(231,130,132,0.3);">
+        <div class="comp-icon">&#128187;</div>
+        <div class="comp-title" style="color:var(--red);">Homelab</div>
+        <div class="comp-sub">Indoor, near running servers/routers</div>
+        <div style="font-size:0.8rem; color:var(--overlay1); margin-top:0.8rem;">Expect: higher temperature, lower humidity</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(202,158,230,0.3);">
+        <div class="comp-icon">&#127968;</div>
+        <div class="comp-title" style="color:var(--mauve);">Hallway</div>
+        <div class="comp-sub">Indoor, neutral, no major heat/moisture sources</div>
+        <div style="font-size:0.8rem; color:var(--overlay1); margin-top:0.8rem;">Expect: baseline / control readings</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 08 — METHOD / PROCEDURE
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Method</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div class="flow-row">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <div class="flow-label">Wire DHT11<br>to Pi GPIO</div>
+      </div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <div class="flow-label">Write &amp; test<br>Python logger</div>
+      </div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <div class="flow-label">Place at<br>Location 1</div>
+      </div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <div class="flow-label">Run script<br>for 5 min</div>
+      </div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-step">
+        <div class="flow-num">05</div>
+        <div class="flow-label">Move to<br>Locations 2 &amp; 3</div>
+      </div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-step">
+        <div class="flow-num">06</div>
+        <div class="flow-label">Analyze<br>CSV data</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:2rem; text-align:center; color:var(--overlay1); font-size:0.9rem;">
+    Same Pi, same sensor, same script — only the location changes.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 09 — CODE PREVIEW (Jensen Huang style: show the tech)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="reveal reveal-d1">
+    <div class="tagline">The Code</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="background:var(--crust); border:1px solid var(--surface0); border-radius:16px; overflow:hidden;">
+        <div style="padding:0.8rem 1.2rem; border-bottom:1px solid var(--surface0); display:flex; align-items:center; gap:0.5rem;">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--red);"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--yellow);"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--green);"></div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--overlay1); margin-left:0.5rem;">sensor_logger.py</span>
+        </div>
+        <pre style="padding:1.5rem; font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:1.7; overflow-x:auto; color:var(--text);"><span style="color:var(--mauve)">import</span> <span style="color:var(--blue)">board</span>, <span style="color:var(--blue)">time</span>, <span style="color:var(--blue)">csv</span>
+<span style="color:var(--mauve)">from</span> <span style="color:var(--blue)">datetime</span> <span style="color:var(--mauve)">import</span> datetime
+<span style="color:var(--mauve)">import</span> <span style="color:var(--blue)">adafruit_dht</span>
+
+<span style="color:var(--overlay1)"># Initialize DHT11 sensor on GPIO pin D4</span>
+sensor = adafruit_dht.DHT11(board.D4)
+
+<span style="color:var(--green)">LOCATION</span> = <span style="color:var(--peach)">"pond_edge"</span>
+<span style="color:var(--green)">DURATION</span> = <span style="color:var(--blue)">300</span>  <span style="color:var(--overlay1)"># 5 minutes in seconds</span>
+<span style="color:var(--green)">INTERVAL</span> = <span style="color:var(--blue)">10</span>   <span style="color:var(--overlay1)"># reading every 10s</span>
+
+<span style="color:var(--mauve)">with</span> <span style="color:var(--blue)">open</span>(<span style="color:var(--peach)">f"data_{LOCATION}.csv"</span>, <span style="color:var(--peach)">"w"</span>) <span style="color:var(--mauve)">as</span> f:
+    writer = csv.writer(f)
+    writer.writerow([<span style="color:var(--peach)">"timestamp"</span>, <span style="color:var(--peach)">"temp_C"</span>, <span style="color:var(--peach)">"humidity_%"</span>])
+    
+    start = time.time()
+    <span style="color:var(--mauve)">while</span> time.time() - start &lt; DURATION:
+        writer.writerow([
+            datetime.now().isoformat(),
+            <span style="color:var(--blue)">round</span>(sensor.temperature, 1),
+            <span style="color:var(--blue)">round</span>(sensor.humidity, 1)
+        ])
+        time.sleep(INTERVAL)
+    
+    <span style="color:var(--blue)">print</span>(<span style="color:var(--peach)">&#9989; Data collection complete</span>)</pre>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1rem;">
+    <span class="badge badge-green">~20 lines</span>
+    <span style="color:var(--overlay1); font-size:0.85rem; margin-left:0.5rem;">Simple. Clean. Does one thing well.</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 10 — RESULTS (actual data collected)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Results</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div class="comparison-grid" style="max-width:1000px;">
+      <div class="comp-card">
+        <div class="comp-icon">&#127754;</div>
+        <div class="comp-title">Pond Edge</div>
+        <div class="comp-temp">17.8&#176;C</div>
+        <div class="comp-sub">Humidity: 82%<br>Cool and damp — water evaporation raised moisture in the air</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">&#128187;</div>
+        <div class="comp-title">Homelab</div>
+        <div class="comp-temp" style="background:linear-gradient(135deg,var(--red),var(--peach));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">27.3&#176;C</div>
+        <div class="comp-sub">Humidity: 34%<br>Noticeably warmer — servers pushing out heat</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">&#127968;</div>
+        <div class="comp-title">Hallway (Control)</div>
+        <div class="comp-temp" style="background:linear-gradient(135deg,var(--mauve),var(--lavender));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">22.1&#176;C</div>
+        <div class="comp-sub">Humidity: 47%<br>Typical indoor conditions — no strong heat or moisture source</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1.5rem; text-align:center;">
+    <span class="badge badge-green">30 readings per location (every 10 seconds for 5 minutes)</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 11 — DATA ANALYSIS (mean, median, mode)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Data Analysis</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="display:flex; gap:2rem; width:100%; max-width:1100px; margin-top:1rem;">
+      <!-- Temperature Table -->
+      <div style="flex:1;">
+        <div style="text-align:center; font-size:0.85rem; font-weight:700; letter-spacing:0.15em; color:var(--peach); text-transform:uppercase; margin-bottom:1rem;">Temperature (&deg;C)</div>
+        <table class="vars-table">
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Mean</th>
+              <th>Median</th>
+              <th>Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-blue">Pond</span></td>
+              <td>17.8</td>
+              <td>17.8</td>
+              <td>17.8</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-red">Homelab</span></td>
+              <td>27.3</td>
+              <td>27.2</td>
+              <td>27.1</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-mauve">Hallway</span></td>
+              <td>22.1</td>
+              <td>22.1</td>
+              <td>22.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Humidity Table -->
+      <div style="flex:1;">
+        <div style="text-align:center; font-size:0.85rem; font-weight:700; letter-spacing:0.15em; color:var(--blue); text-transform:uppercase; margin-bottom:1rem;">Humidity (%)</div>
+        <table class="vars-table">
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Mean</th>
+              <th>Median</th>
+              <th>Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-blue">Pond</span></td>
+              <td>82</td>
+              <td>82</td>
+              <td>83</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-red">Homelab</span></td>
+              <td>34</td>
+              <td>34</td>
+              <td>33</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-mauve">Hallway</span></td>
+              <td>47</td>
+              <td>47</td>
+              <td>47</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1.5rem; text-align:center; max-width:800px;">
+    <div style="color:var(--subtext0); font-size:0.95rem; line-height:1.6;">
+      <strong style="color:var(--text);">Mode</strong> = most frequent reading. <strong style="color:var(--text);">Median</strong> = middle value when sorted. <strong style="color:var(--text);">Mean</strong> = average of all 30 readings.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 12 — KEY FINDINGS
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Key Findings</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:800px; text-align:center;">
+      <div class="statement" style="font-size:clamp(1.2rem,3vw,2rem);">
+        The homelab was <span style="color:var(--red);">9.5&deg;C warmer</span> than the pond edge.
+        The pond was <span style="color:var(--blue);">48% more humid</span> than the homelab.
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:2rem;">
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center;">
+      <div class="comp-card" style="border-color:rgba(166,209,137,0.3); padding:1.2rem 1.8rem; min-width:200px;">
+        <div style="font-size:0.75rem; color:var(--green); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Hypothesis</div>
+        <div style="font-size:1rem; color:var(--text);"><strong>Supported</strong> — water raised humidity, electronics raised temperature</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(239,159,118,0.3); padding:1.2rem 1.8rem; min-width:200px;">
+        <div style="font-size:0.75rem; color:var(--peach); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Biggest Swing</div>
+        <div style="font-size:1rem; color:var(--text);">Humidity at the pond: <strong>82%</strong> vs homelab: <strong>34%</strong></div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(202,158,230,0.3); padding:1.2rem 1.8rem; min-width:200px;">
+        <div style="font-size:0.75rem; color:var(--mauve); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Control held steady</div>
+        <div style="font-size:1rem; color:var(--text);">Hallway stayed at ~22&deg;C and ~47% — no surprise spikes</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 13 — LIMITATIONS & ERROR ANALYSIS
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Limitations & Sources of Error</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; max-width:900px;">
+      <div class="comp-card" style="border-color:rgba(231,130,130,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--red); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Sensor Accuracy</div>
+        <div style="font-size:0.9rem; color:var(--text);">DHT11 has &plusmn;2&deg;C and &plusmn;5% RH margin of error. Real readings could shift by this much in either direction.</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(239,159,118,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--peach); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Short Sampling</div>
+        <div style="font-size:0.9rem; color:var(--text);">Only 5 minutes per location. A longer window would catch fluctuations — like servers ramping up or wind shifting.</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(202,158,230,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--mauve); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Single Time Point</div>
+        <div style="font-size:0.9rem; color:var(--text);">All tests done in one 20-minute window. Time of day, sunlight, and weather all affect microclimates.</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(140,170,238,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--blue); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">What I'd Do Differently</div>
+        <div style="font-size:0.9rem; color:var(--text);">Longer sampling (30+ min), multiple days, more locations, and a backup sensor to cross-check readings.</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1.5rem; text-align:center;">
+    <span class="badge badge-yellow">Being honest about limitations is part of science — it shows you understand the method, not just the result.</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 14 — WHY IT MATTERS (Jobs-style: zoom out)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Why It Matters</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div class="statement" style="text-align:center;">
+      Microclimates affect <span style="color:var(--peach);">comfort</span>, <span style="color:var(--green);">energy use</span>, <br>and even <span style="color:var(--blue);">hardware lifespan</span>.
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:2rem;">
+    <div style="max-width:800px; text-align:center; color:var(--subtext0); font-size:1.1rem; line-height:1.8;">
+      Server rooms that overheat cost companies millions in cooling. A 9.5&deg;C swing between two rooms in the same building shows why sensor placement matters. Even a 2&deg;C difference affects hardware failure rates.<br><br>
+      Greenhouses need 60-80% humidity for most crops &mdash; our pond edge hit 82%. Homes need 30-50% for comfort and to prevent mold &mdash; our hallway sat at 47%.<br><br>
+      Understanding <span style="color:var(--mauve); font-weight:600;">microclimates with real data</span> helps us make better decisions about where to put things &mdash; from plants to computers to people.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 15 — WORKS CITED
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Works Cited</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:800px; text-align:left; color:var(--subtext0); font-size:0.95rem; line-height:2;">
+      <div style="margin-bottom:0.8rem;">"DHT11 Temperature and Humidity Sensor." <em>Components101</em>, components101.com/sensors/dht11-temperature-sensor. Accessed 7 June 2026.</div>
+      <div style="margin-bottom:0.8rem;">"Raspberry Pi 5." <em>Raspberry Pi Foundation</em>, raspberrypi.com/products/raspberry-pi-5. Accessed 7 June 2026.</div>
+      <div style="margin-bottom:0.8rem;">"Unicorn HAT Mini." <em>Pimoroni</em>, shop.pimoroni.com/products/unicorn-hat-mini. Accessed 7 June 2026.</div>
+      <div style="margin-bottom:0.8rem;">"Microclimate." <em>National Geographic</em>, education.nationalgeographic.org/resource/microclimate. Accessed 7 June 2026.</div>
+      <div style="margin-bottom:0.8rem;">"Adafruit CircuitPython DHT Library." <em>Adafruit</em>, github.com/adafruit/Adafruit_CircuitPython_DHT. Accessed 7 June 2026.</div>
+      <div>"OpenWeatherMap API." <em>OpenWeather</em>, openweathermap.org/api. Accessed 7 June 2026.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 16 — CLOSING / Q&A
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s16">
+  <div class="reveal reveal-d1" style="text-align:center;">
+    <div style="font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; color:var(--text); line-height:1.1;">
+      Data Over<br>
+      <span class="accent">Assumptions</span>
+    </div>
+  </div>
+  <div class="reveal reveal-d2" style="margin-top:1.5rem;">
+    <p class="subtitle">
+      We measured. We compared. We learned.
+    </p>
+  </div>
+  <div class="reveal reveal-d3 qa-box">
+    <div class="qa-text">Questions?</div>
+  </div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+
+function updateSlideClasses() {
+  const progressPct = ((current) / (total - 1)) * 100;
+  document.getElementById('progress').style.width = progressPct + '%';
+  document.getElementById('slideNum').textContent = current + 1;
+  document.getElementById('counter').textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'exit-left');
+    if (i === current) {
+      s.classList.add('active');
+      // trigger reveal animations
+      s.querySelectorAll('.reveal').forEach((el, j) => {
+        el.classList.remove('visible');
+        setTimeout(() => el.classList.add('visible'), 80);
+      });
+    } else if (i < current) {
+      s.classList.add('exit-left');
+    }
+  });
+}
+
+function nextSlide() {
+  if (current < total - 1) { current++; updateSlideClasses(); }
+}
+
+function prevSlide() {
+  if (current > 0) { current--; updateSlideClasses(); }
+}
+
+// Keyboard nav
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft' || e.key === 'Backspace') { e.preventDefault(); prevSlide(); }
+  if (e.key === 'Home') { current = 0; updateSlideClasses(); }
+  if (e.key === 'End') { current = total - 1; updateSlideClasses(); }
+});
+
+// Touch / swipe support
+let touchStartX = 0;
+let touchStartY = 0;
+document.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].screenX - touchStartX;
+  const dy = e.changedTouches[0].screenY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+    if (dx < 0) nextSlide();
+    else prevSlide();
+  }
+});
+
+// Mouse wheel nav (debounced)
+let wheelAllowed = true;
+document.addEventListener('wheel', e => {
+  if (!wheelAllowed) return;
+  wheelAllowed = false;
+  if (e.deltaY > 30) nextSlide();
+  else if (e.deltaY < -30) prevSlide();
+  setTimeout(() => wheelAllowed = true, 500);
+}, { passive: true });
+
+// Initialize
+updateSlideClasses();
+</script>
+</body>
+</html>
