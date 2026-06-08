@@ -338,7 +338,7 @@
 <body>
 
 <!-- Slide Counter -->
-<div class="slide-counter" id="counter">01 / 16</div>
+<div class="slide-counter" id="counter">01 / 18</div>
 
 <!-- Navigation -->
 <div class="nav">
@@ -366,7 +366,7 @@
   </div>
   <div class="reveal reveal-d4">
     <p class="subtitle">
-      How do temperature and humidity change across different environments — measured with a Raspberry Pi and precision sensor.
+      How do temperature and humidity change across different environments — measured with a Raspberry Pi and DHT11 sensor.
     </p>
   </div>
   <div class="reveal reveal-d5" style="margin-top:2rem;">
@@ -384,13 +384,14 @@
   </div>
   <div class="reveal reveal-d2">
     <div class="statement">
-      We experience different "feelings" in different places.<br><br>
-      But <span class="accent" style="color:var(--mauve);">how different are they, really?</span>
+      I walk past a pond every morning and it always feels damp.<br><br>
+      My homelab feels like a <span class="accent" style="color:var(--peach);">furnace</span>.<br><br>
+      But are my senses right — or am I just imagining it?
     </div>
   </div>
   <div class="reveal reveal-d3" style="margin-top:2rem;">
     <div style="font-size:1.1rem; color:var(--subtext0); max-width:700px; line-height:1.7; text-align:center;">
-      Outside near a pond. Inside near running servers. These places <em>feel</em> different — but no one's <span style="color:var(--blue); font-weight:600;">measured</span> the actual difference with real data.
+      I put a <span style="color:var(--blue); font-weight:600;">DHT11 sensor</span> at three spots — at a pond, in my homelab, and in a hallway. Five minutes each. Temperature and humidity. Real numbers, not feelings.
     </div>
   </div>
 </div>
@@ -719,9 +720,39 @@ sensor = adafruit_dht.DHT11(board.D4)
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 11 — DATA ANALYSIS (mean, median, mode)
+     SLIDE 11 — DATA VISUALIZATION (charts)
      ═══════════════════════════════════════════ -->
 <div class="slide" id="s11">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Data Visualization</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="display:flex; gap:2rem; flex-wrap:wrap; justify-content:center; max-width:1100px;">
+      <!-- Bar Chart -->
+      <div style="flex:1; min-width:300px;">
+        <div style="text-align:center; font-size:0.85rem; font-weight:700; letter-spacing:0.15em; color:var(--peach); text-transform:uppercase; margin-bottom:1rem;">Comparison Chart</div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1rem;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgMzIwIiBzdHlsZT0id2lkdGg6MTAwJTttYXgtd2lkdGg6NzAwcHg7Ij4KICA8c3R5bGU+CiAgICAudGl0bCB7IGZvbnQtZmFtaWx5OiBJbnRlciwgc3lzdGVtLXVpLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0cHg7IGZvbnQtd2VpZ2h0OiA3MDA7IGZpbGw6ICNjNmQwZjU7IH0KICAgIC5sYWJlbCB7IGZvbnQtZmFtaWx5OiBJbnRlciwgc3lzdGVtLXVpLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDExcHg7IGZpbGw6ICNhNWFkY2U7IH0KICAgIC52YWwgeyBmb250LWZhbWlseTogJ0pldEJyYWlucyBNb25vJywgbW9ub3NwYWNlOyBmb250LXNpemU6IDExcHg7IGZvbnQtd2VpZ2h0OiA2MDA7IGZpbGw6ICNjNmQwZjU7IH0KICAgIC5ncmlkIHsgc3Ryb2tlOiAjNDE0NTU5OyBzdHJva2Utd2lkdGg6IDAuNTsgc3Ryb2tlLWRhc2hhcnJheTogNCw0OyBvcGFjaXR5OiAwLjQ7IH0KICAgIC5sZWdlbmQtdGV4dCB7IGZvbnQtZmFtaWx5OiBJbnRlciwgc3lzdGVtLXVpLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDExcHg7IGZpbGw6ICNhNWFkY2U7IH0KICA8L3N0eWxlPgogIDxyZWN0IHdpZHRoPSI3MDAiIGhlaWdodD0iMzIwIiBmaWxsPSIjMzAzNDQ2IiByeD0iMTIiLz4KICA8dGV4dCB4PSIzNTAiIHk9IjI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idGl0bCI+VGVtcGVyYXR1cmUgKMKpQykgYW5kIEh1bWlkaXR5ICglKSBieSBMb2NhdGlvbjwvdGV4dD4KICA8bGluZSB4MT0iNjAiIHkxPSIyNjAiIHgyPSI2NjAiIHkyPSIyNjAiIGNsYXNzPSJncmlkIi8+CiAgPHRleHQgeD0iNTIiIHk9IjI2NCIgdGV4dC1hbmNob3I9ImVuZCIgY2xhc3M9ImxhYmVsIj4wwrA8L3RleHQ+CiAgPGxpbmUgeDE9IjYwIiB5MT0iMjA3LjUiIHgyPSI2NjAiIHkyPSIyMDcuNSIgY2xhc3M9ImdyaWQiLz4KICA8dGV4dCB4PSI1MiIgeT0iMjExLjUiIHRleHQtYW5jaG9yPSJlbmQiIGNsYXNzPSJsYWJlbCI+OMKpPC90ZXh0PgogIDxsaW5lIHgxPSI2MCIgeTE9IjE1NSIgeDI9IjY2MCIgeTI9IjE1NSIgY2xhc3M9ImdyaWQiLz4KICA8dGV4dCB4PSI1MiIgeT0iMTU5IiB0ZXh0LWFuY2hvcj0iZW5kIiBjbGFzcz0ibGFiZWwiPjE2wrA8L3RleHQ+CiAgPGxpbmUgeDE9IjYwIiB5MT0iMTAyLjUiIHgyPSI2NjAiIHkiPSIxMDIuNSIgY2xhc3M9ImdyaWQiLz4KICA8dGV4dCB4PSI1MiIgeT0iMTA2LjUiIHRleHQtYW5jaG9yPSJlbmQiIGNsYXNzPSJsYWJlbCI+MjTCrTwvdGV4dD4KICA8bGluZSB4MT0iNjAiIHkxPSI1MCIgeDI9IjY2MCIgeTI9IjUwIiBjbGFzcz0iZ3JpZCIvPgogIDx0ZXh0IHg9IjUyIiB5PSI1NCIgdGV4dC1hbmNob3I9ImVuZCIgY2xhc3M9ImxhYmVsIj4zMsKpPC90ZXh0PgogIDxyZWN0IHg9IjEwMCIgeT0iMTQzLjE4NzUiIHdpZHRoPSI1MCIgaGVpZ2h0PSIxMTYuODEyNSIgZmlsbD0iIzhjYWFlZSIgb3BhY2l0eT0iMC45IiByeD0iNCIvPgogIDx0ZXh0IHg9IjEyNSIgeT0iMTM3LjE4NzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWwiPjE3LjjCrUM8L3RleHQ+CiAgPHJlY3QgeD0iMTU4IiB5PSI4Ny44IiB3aWR0aD0iNTAiIGhlaWdodD0iMTcyLjIiIGZpbGw9IiM4Y2FhZWUiIG9wYWNpdHk9IjAuNSIgc3Ryb2tlPSIjOGNhYWVlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iNCwyIiByeD0iNCIvPgogIDx0ZXh0IHg9IjE4MyIgeT0iMTgxLjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWwiPjgyLjAlPC90ZXh0PgogIDx0ZXh0IHg9IjE1NCIgeT0iMzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPlBvbmQgRWRnZTwvdGV4dD4KICA8cmVjdCB4PSIyODgiIHk9IjgwLjE4NzUiIHdpZHRoPSI1MCIgaGVpZ2h0PSIxNzkuODEyNSIgZmlsbD0iI2U3ODI4NCIgb3BhY2l0eT0iMC45IiByeD0iNCIvPgogIDx0ZXh0IHg9IjMxMyIgeT0iNzQuMTg3NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+MjcuNMK1QzwvdGV4dD4KICA8cmVjdCB4PSIzNDYiIHk9IjE4OC42IiB3aWR0aD0iNTAiIGhlaWdodD0iNzEuNCIgZmlsbD0iI2U3ODI4NCIgb3BhY2l0eT0iMC41IiBzdHJva2U9IiNlNzgyODQiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtZGFzaGFycmF5PSI0LDIiIHJ4PSI0Ii8+CiAgPHRleHQgeD0iMzcxIiB5PSIxODIuNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+MzQlPC90ZXh0PgogIDx0ZXh0IHg9IjM0MiIgeT0iMzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPkhvbWVsYWI8L3RleHQ+CiAgPHJlY3QgeD0iNDc2IiB5PSIxMTQuMzEyNSIgd2lkdGg9IjUwIiBoZWlnaHQ9IjE0NS42ODc1IiBmaWxsPSIjY2E5ZWU2IiBvcGFjaXR5PSIwLjkiIHJ4PSI0Ii8+CiAgPHRleHQgeD0iNTAxIiB5PSIxMDguMzEyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+MjIuMsK1QzwvdGV4dD4KICA8cmVjdCB4PSI1MzQiIHk9IjE2MC44OCIgd2lkdGg9IjUwIiBoZWlnaHQ9Ijk5LjEyIiBmaWxsPSIjY2E5ZWU2IiBvcGFjaXR5PSIwLjUiIHN0cm9rZT0iI2NhOWVlNiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1kYXNoYXJyYXk9IjQsMiIgcng9IjQiLz4KICA8dGV4dCB4PSI1NTkiIHk9IjE1NC44OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+NDcuMiU8L3RleHQ+CiAgPHRleHQgeD0iNTMwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+SGFsbHdheTwvdGV4dD4KICA8cmVjdCB4PSI1MDAiIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIGZpbGw9IiM4Y2FhZWUiIHJ4PSIyIi8+CiAgPHRleHQgeD0iNTE4IiB5PSI1MyIgY2xhc3M9ImxlZ2VuZC10ZXh0Ij5UZW1wZXJhdHVyZSAowrVDKTwvdGV4dD4KICA8cmVjdCB4PSI1MDAiIHk9IjU4IiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzhjYWFlZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1kYXNoYXJyYXk9IjQsMiIgcng9IjIiLz4KICA8dGV4dCB4PSI1MTgiIHk9IjY5IiBjbGFzcz0ibGVnZW5kLXRleHQiPkh1bWlkaXR5ICglKTwvdGV4dD4KPC9zdmc+" alt="Temperature and Humidity Comparison Chart" style="width:100%;"/>
+        </div>
+      </div>
+      <!-- Time Series Chart -->
+      <div style="flex:1; min-width:300px;">
+        <div style="text-align:center; font-size:0.85rem; font-weight:700; letter-spacing:0.15em; color:var(--blue); text-transform:uppercase; margin-bottom:1rem;">Temperature Over Time</div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1rem;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMzQwIiBzdHlsZT0id2lkdGg6MTAwJTttYXgtd2lkdGg6ODAwcHg7Ij4KICA8c3R5bGU+CiAgICAudGl0bGUgeyBmb250LWZhbWlseTogSW50ZXIsIHN5c3RlbS11aSwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxNHB4OyBmb250LXdlaWdodDogNzAwOyBmaWxsOiAjYzZkMGY1OyB9CiAgICAubGFiZWwgeyBmb250LWZhbWlseTogSW50ZXIsIHN5c3RlbS11aSwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMXB4OyBmaWxsOiAjYTVhZGNlOyB9CiAgICAubGVnZW5kLXRleHQgeyBmb250LWZhbWlseTogSW50ZXIsIHN5c3RlbS11aSwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMXB4OyBmaWxsOiAjYTVhZGNlOyB9CiAgICAuZ3JpZCB7IHN0cm9rZTogIzQxNDU1OTsgc3Ryb2tlLXdpZHRoOiAwLjU7IHN0cm9rZS1kYXNoYXJyYXk6IDQsNDsgb3BhY2l0eTogMC40OyB9CiAgICAubGluZS1wb25kIHsgZmlsbDogbm9uZTsgc3Ryb2tlOiAjOGNhYWVlOyBzdHJva2Utd2lkdGg6IDIuNTsgc3Ryb2tlLWxpbmVjYXA6IHJvdW5kOyBzdHJva2UtbGluZWpvaW46IHJvdW5kOyB9CiAgICAubGluZS1ob21lbGFiIHsgZmlsbDogbm9uZTsgc3Ryb2tlOiAjZTc4Mjg0OyBzdHJva2Utd2lkdGg6IDIuNTsgc3Ryb2tlLWxpbmVjYXA6IHJvdW5kOyBzdHJva2UtbGluZWpvaW46IHJvdW5kOyB9CiAgICAubGluZS1oYWxsd2F5IHsgZmlsbDogbm9uZTsgc3Ryb2tlOiAjY2E5ZWU2OyBzdHJva2Utd2lkdGg6IDIuNTsgc3Ryb2tlLWxpbmVjYXA6IHJvdW5kOyBzdHJva2UtbGluZWpvaW46IHJvdW5kOyB9CiAgPC9zdHlsZT4KICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjM0MCIgZmlsbD0iIzMwMzQ0NiIgcng9IjEyIi8+CiAgPHRleHQgeD0iNDAwIiB5PSIyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InRpdGxlIj5UZW1wZXJhdHVyZSBPdmVyIFRpbWUgLSAzMCBSZWFkaW5ncyBwZXIgTG9jYXRpb24gKDUgbWludXRlcyk8L3RleHQ+CiAgPGxpbmUgeDE9IjYwIiB5MT0iMjgwIiB4Mjc9Ijc2MCIgeTI9IjI4MCIgY2xhc3M9ImdyaWQiLz4KICA8dGV4dCB4PSI1MiIgeT0iMjg0IiB0ZXh0LWFuY2hvcj0iZW5kIiBjbGFzcz0ibGFiZWwiPjE2wrA8L3RleHQ+CiAgPGxpbmUgeDE9IjYwIiB5MT0iMjQ1LjQiIHgyPSI3NjAiIHkyPSIyNDUuNCIgY2xhc3M9ImdyaWQiLz4KICA8dGV4dCB4PSI1MiIgeT0iMjQ5LjQiIHRleHQtYW5jaG9yPSJlbmQiIGNsYXNzPSJsYWJlbCI+MTjCrTwvdGV4dD4KICA8bGluZSB4MT0iNjAiIHkxPSIyMTAuOCIgeDI9Ijc2MCIgeTI9IjIxMC44IiBjbGFzcz0iZ3JpZCIvPgogIDx0ZXh0IHg9IjUyIiB5PSIyMTQuOCIgdGV4dC1hbmNob3I9ImVuZCIgY2xhc3M9ImxhYmVsIj4yMsKpPC90ZXh0PgogIDxsaW5lIHgxPSI2MCIgeTE9IjE3Ni4yIiB4Mj0iNzYwIiB5Mj0iMTc2LjIiIGNsYXNzPSJncmlkIi8+CiAgPHRleHQgeD0iNTIiIHk9IjE4MC4yIiB0ZXh0LWFuY2hvcj0iZW5kIiBjbGFzcz0ibGFiZWwiPjI0wrA8L3RleHQ+CiAgPGxpbmUgeDE9IjYwIiB5MT0iMTQxLjYiIHgyPSI3NjAiIHkyPSIxNDEuNiIgY2xhc3M9ImdyaWQiLz4KICA8dGV4dCB4PSI1MiIgeT0iMTQ1LjYiIHRleHQtYW5jaG9yPSJlbmQiIGNsYXNzPSJsYWJlbCI+MjbCrTwvdGV4dD4KICA8bGluZSB4MT0iNjAiIHkxPSIxMDcuMSIgeDI9Ijc2MCIgeTI9IjEwNy4xIiBjbGFzcz0iZ3JpZCIvPgogIDx0ZXh0IHg9IjUyIiB5PSIxMTEuMSIgdGV4dC1hbmNob3I9ImVuZCIgY2xhc3M9ImxhYmVsIj4yOMKpPC90ZXh0PgogIDx0ZXh0IHg9IjYwIiB5PSIzMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+MHM8L3RleHQ+CiAgPHRleHQgeD0iMzAxLjQiIHk9IjMyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj4xMDBzPC90ZXh0PgogIDx0ZXh0IHg9IjU0Mi44IiB5PSIzMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+MjAwczwvdGV4dD4KICA8dGV4dCB4PSI3ODQuMSIgeT0iMzI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPjMwMHM8L3RleHQ+CiAgPHRleHQgeD0iNDAwIiB5PSIzMzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCIgc3R5bGU9ImZvbnQtc2l6ZToxMHB4OyI+VGltZSAoc2Vjb25kcyBlbGFwc2VkKTwvdGV4dD4KICA8cGF0aCBkPSJNNjAsMjQ1LjQgTDg0LjEsMjQ1LjQgTDEwOC4zLDI0NS40IEwxMzIuNCwyNDUuNCBMMTU2LjYsMjU0LjEgTDE4MC43LDI0NS40IEwyMDQuOCwyNDUuNCBMMjI5LDI1NC4xIEwyNTMuMSwyNDUuNCBMMjc3LjIsMjQ1LjQgTDMwMS40LDI0NS40IEwzMjUuNSwyNTQuMSBMMzQ5LjcsMjQ1LjQgTDM3My44LDI0NS40IEwzOTcuOSwyNDUuNCBMMjIyLjEsMjQ1LjIgTDQ0Ni4yLDI2Mi43IEw0NzAuMywyNTQuMSBMNDk0LjUsMjQ1LjIgTDUxOC42LDI0NS40IEw1NDIuOCwyNDUuNCBMNTY2LjksMjQ1LjQgTDU5MSwyNDUuNCBMNjE1LjIsMjU0LjEgTDY2My40LDI1NC4xIEw2ODcuNiwyNTQuMSBMMzExLjcsMjU0LjEgTDczNS45LDI0NS40IEw3NjAsMjQ1LjQiIGNsYXNzPSJsaW5lLXBvbmQiLz4KICA8cGF0aCBkPSJNNjAsNzIuNSBMODQuMSw5Ni43IEwxMDguMyw3NS45IEwxMzIuNCw4NC42IEwxNTYuNiw4OCBMMTgwLjcsNzkuNCBMMjA0LjgsNzkuNCBMMjI5LDg5LjggTDI1My4xLDc1LjkgTDI3Ny4yLDguNiBMMzAxLjQsOTEuNSBMMjI1LjUsMTAwLjIgTDM0OS43LDg5LjggTDM3My44LDc0LjIgTDM5Ny45LDgyLjkgTDQyMi4xLDc1LjkgTDQ0Ni4yLDgyLjkgTDQ3MC4zLDc1LjkgTDQ5NC41LDc0LjIgTDUxOC42LDcuMyBMNTQyLjgsNzAuOCBMNTY2LjksODkuOCA TDkxLDg2LjMgTDYxNS4yLDc3LjcgTDYzOS4zLDEwNS4zIEw2NjMuNCw3OS40IEw2ODcuNiw4OS44IEw3MTEuNyw2OSBMNzM1LjksODggTDc2MCw4OCIgY2xhc3M9ImxpbmUtaG9tZWxhYiIvPgogIDxwYXRoIGQ9Ik02MCwxNzQuNSBMODQuMSwxNzQuNSBMMTA4LjMsMTcxIEwxMzIuNCwxNjUuOSBMMTU2LjYsMTY5LjMgTDE4MC43LDE3NC41IEwyMDQuOCwxNjkuMyBMMjI5LjEsMTcxIEwyNTMuMSwxNjkuMyBMMjcuMiwxNzQuNSBMMzAxLjQsMTc4IEwzMjUuNSwxNzQuNSBMMzQ5LjcsMTc2LjIgTDM3My44LDE3OS43IEwzOTcuOSwxNzIuOCBMMjIyLjEsMTY5LjMgTDQ0Ni4yLDE3OCBMNDcwLjMsMTcyLjggTDQ5NC41LDE3Ni4yIEw1MTguNiwxNzQuNSBMNTQyLjgsMTY5LjMgTDU2Ni45LDE3Mi44IEw1OTEuMSwxNzQuNSBMNjE1LjIsMTc0LjUgTDYzOS4zLDE3NC41IEw2NjMuNCwxNzEuMSBMNjg3LjYsMTc5LjcgTDcxMS43LDE3NC41IEw3MzUuOSwxNzEuMSBMNzYwLDE3OCIgY2xhc3M9ImxpbmUtaGFsd2F5Ii8+CiAgPGxpbmUgeDE9IjU4MCIgeTE9IjQ4IiB4Mj0iNjAwIiB5Mj0iNDgiIHN0cm9rZT0iIzhjYWFlZSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxjaXJjbGUgY3g9IjU5MCIgY3k9IjQ4IiByPSIzIiBmaWxsPSIjOGNhYWVlIi8+CiAgPHRleHQgeD0iNjA4IiB5PSI1MiIgY2xhc3M9ImxlZ2VuZC10ZXh0Ij5Qb25kIEVkZ2U8L3RleHQ+CiAgPGxpbmUgeDE9IjU4MCIgeTE9IjY2IiB4Mj0iNjAwIiB5Mj0iNjYiIHN0cm9rZT0iI2U3ODI4NCIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxjaXJjbGUgY3g9IjU5MCIgY3k9IjY2IiByPSIzIiBmaWxsPSIjZTc4Mjg0Ii8+CiAgPHRleHQgeD0iNjA4IiB5PSI3MCIgY2xhc3M9ImxlZ2VuZC10ZXh0Ij5Ib21lbGFiPC90ZXh0PgogIDxsaW5lIHgxPSI1ODAiIHk9Ijg0IiB4Mj0iNjAwIiB5Mj0iODQiIHN0cm9rZT0iI2NhOWVlNiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxjaXJjbGUgY3g9IjU5MCIgY3k9Ijg0IiByPSIzIiBmaWxsPSIjY2E5ZWU2Ii8+CiAgPHRleHQgeD0iNjA4IiB5PSI4OCIgY2xhc3M9ImxlZ2VuZC10ZXh0Ij5IYWxsd2F5PC90ZXh0Pgo8L3N2Zz4=" alt="Temperature Over Time Chart" style="width:100%;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1rem;">
+    <span class="badge badge-blue">Each data point = one reading every 10 seconds. 30 readings per location over 5 minutes.</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 13 — DATA ANALYSIS (mean, median, mode)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s12">
   <div class="reveal reveal-d1">
     <div class="tagline">Data Analysis</div>
   </div>
@@ -743,20 +774,23 @@ sensor = adafruit_dht.DHT11(board.D4)
             <tr>
               <td><span class="badge badge-blue">Pond</span></td>
               <td>17.8</td>
-              <td>17.8</td>
-              <td>17.8</td>
+              <td>18.0</td>
+              <td>18.0</td>
+              <td>1.0</td>
             </tr>
             <tr>
               <td><span class="badge badge-red">Homelab</span></td>
-              <td>27.3</td>
-              <td>27.2</td>
-              <td>27.1</td>
+              <td>27.4</td>
+              <td>27.4</td>
+              <td>27.8</td>
+              <td>2.2</td>
             </tr>
             <tr>
               <td><span class="badge badge-mauve">Hallway</span></td>
+              <td>22.2</td>
               <td>22.1</td>
               <td>22.1</td>
-              <td>22.0</td>
+              <td>0.8</td>
             </tr>
           </tbody>
         </table>
@@ -771,6 +805,7 @@ sensor = adafruit_dht.DHT11(board.D4)
               <th>Mean</th>
               <th>Median</th>
               <th>Mode</th>
+              <th>Range</th>
             </tr>
           </thead>
           <tbody>
@@ -778,19 +813,22 @@ sensor = adafruit_dht.DHT11(board.D4)
               <td><span class="badge badge-blue">Pond</span></td>
               <td>82</td>
               <td>82</td>
-              <td>83</td>
+              <td>82</td>
+              <td>8</td>
             </tr>
             <tr>
               <td><span class="badge badge-red">Homelab</span></td>
               <td>34</td>
               <td>34</td>
               <td>33</td>
+              <td>8</td>
             </tr>
             <tr>
               <td><span class="badge badge-mauve">Hallway</span></td>
               <td>47</td>
               <td>47</td>
               <td>47</td>
+              <td>4</td>
             </tr>
           </tbody>
         </table>
@@ -799,15 +837,18 @@ sensor = adafruit_dht.DHT11(board.D4)
   </div>
   <div class="reveal reveal-d3" style="margin-top:1.5rem; text-align:center; max-width:800px;">
     <div style="color:var(--subtext0); font-size:0.95rem; line-height:1.6;">
-      <strong style="color:var(--text);">Mode</strong> = most frequent reading. <strong style="color:var(--text);">Median</strong> = middle value when sorted. <strong style="color:var(--text);">Mean</strong> = average of all 30 readings.
+      <strong style="color:var(--text);">Mean</strong> = average of all 30 readings. <strong style="color:var(--text);">Median</strong> = middle value when sorted. <strong style="color:var(--text);">Mode</strong> = most frequent reading. <strong style="color:var(--text);">Range</strong> = max minus min.
     </div>
+  </div>
+  <div class="reveal reveal-d4" style="margin-top:1rem; text-align:center;">
+    <span class="badge badge-yellow">Note: DHT11 temperature resolution is 0.5°C. Pond temps only show 3 distinct values (17.0, 17.5, 18.0) — this is a sensor limitation, not a sign nothing changed.</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════
      SLIDE 12 — KEY FINDINGS
      ═══════════════════════════════════════════ -->
-<div class="slide" id="s12">
+<div class="slide" id="s13">
   <div class="reveal reveal-d1">
     <div class="tagline">Key Findings</div>
   </div>
@@ -838,33 +879,29 @@ sensor = adafruit_dht.DHT11(board.D4)
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 13 — LIMITATIONS & ERROR ANALYSIS
+     SLIDE 14 — LIMITATIONS & ERROR ANALYSIS
      ═══════════════════════════════════════════ -->
-<div class="slide" id="s13">
+<div class="slide" id="s14">
   <div class="reveal reveal-d1">
     <div class="tagline">Limitations & Sources of Error</div>
   </div>
   <div class="reveal reveal-d2">
-    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; max-width:900px;">
-      <div class="comp-card" style="border-color:rgba(231,130,130,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; max-width:950px;">
+      <div class="comp-card" style="border-color:rgba(231,130,130,0.3); padding:1.2rem 1.5rem; min-width:280px; text-align:left;">
         <div style="font-size:0.75rem; color:var(--red); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Sensor Accuracy</div>
-        <div style="font-size:0.9rem; color:var(--text);">DHT11 has &plusmn;2&deg;C and &plusmn;5% RH margin of error. Real readings could shift by this much in either direction.</div>
+        <div style="font-size:0.9rem; color:var(--text);">DHT11 has ±2°C and ±5% RH margin of error. <strong>Impact:</strong> the real pond temperature could be as low as 15.8°C or as high as 19.8°C. That is a big range when you are trying to compare locations.</div>
       </div>
-      <div class="comp-card" style="border-color:rgba(239,159,118,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+      <div class="comp-card" style="border-color:rgba(239,159,118,0.3); padding:1.2rem 1.5rem; min-width:280px; text-align:left;">
         <div style="font-size:0.75rem; color:var(--peach); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Short Sampling</div>
-        <div style="font-size:0.9rem; color:var(--text);">Only 5 minutes per location. A longer window would catch fluctuations — like servers ramping up or wind shifting.</div>
+        <div style="font-size:0.9rem; color:var(--text);">Only 5 minutes per location. <strong>Impact:</strong> if a cloud passed over or a server fan kicked in during those 5 minutes, the data would look very different. A longer window would smooth that out.</div>
       </div>
-      <div class="comp-card" style="border-color:rgba(202,158,230,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+      <div class="comp-card" style="border-color:rgba(202,158,230,0.3); padding:1.2rem 1.5rem; min-width:280px; text-align:left;">
         <div style="font-size:0.75rem; color:var(--mauve); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Single Time Point</div>
-        <div style="font-size:0.9rem; color:var(--text);">All tests done in one 20-minute window. Time of day, sunlight, and weather all affect microclimates.</div>
+        <div style="font-size:0.9rem; color:var(--text);">All tests done in one 20-minute window. <strong>Impact:</strong> morning sun, afternoon heat, and evening cool all change microclimates. One snapshot does not show the full picture.</div>
       </div>
-      <div class="comp-card" style="border-color:rgba(140,170,238,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
-        <div style="font-size:0.75rem; color:var(--blue); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">What I'd Do Differently</div>
-        <div style="font-size:0.9rem; color:var(--text);">Longer sampling (30+ min), multiple days, more locations, and a backup sensor to cross-check readings.</div>
-      </div>
-      <div class="comp-card" style="border-color:rgba(166,209,137,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
-        <div style="font-size:0.75rem; color:var(--green); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Display Note</div>
-        <div style="font-size:0.9rem; color:var(--text);">The DHT11 sensor module broke before the demo. The live display now uses OpenWeatherMap API for temperature instead.</div>
+      <div class="comp-card" style="border-color:rgba(140,170,238,0.3); padding:1.2rem 1.5rem; min-width:280px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--blue); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">What I Would Do Differently</div>
+        <div style="font-size:0.9rem; color:var(--text);">Sample for 30+ minutes at each location. Repeat on multiple days. Add more spots — like near a window or outside in direct sun. And bring a backup sensor.</div>
       </div>
     </div>
   </div>
@@ -874,9 +911,44 @@ sensor = adafruit_dht.DHT11(board.D4)
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 14 — WHY IT MATTERS (Jobs-style: zoom out)
+     SLIDE 15 — SENSOR FAILURE (what went wrong)
      ═══════════════════════════════════════════ -->
-<div class="slide" id="s14">
+<div class="slide" id="s15">
+  <div class="reveal reveal-d1">
+    <div class="tagline">When Things Go Wrong</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:750px; text-align:center;">
+      <div class="statement" style="font-size:clamp(1.1rem,2.5vw,1.6rem);">
+        The DHT11 sensor module <span style="color:var(--red);">broke</span> before the demo.
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1.5rem;">
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; max-width:900px;">
+      <div class="comp-card" style="border-color:rgba(231,130,130,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--red); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">What Happened</div>
+        <div style="font-size:0.9rem; color:var(--text);">I tried to solder the DHT11 sensor to a header so it could plug into the Pi. The sensor module stopped working after that. It would not give any readings.</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(166,209,137,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--green); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">The Fix</div>
+        <div style="font-size:0.9rem; color:var(--text);">I used the OpenWeatherMap API to get the current outdoor temperature instead. It is not the same as a live sensor, but it still shows the Pi can display real weather data.</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(202,158,230,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--mauve); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">What I Learned</div>
+        <div style="font-size:0.9rem; color:var(--text);">Soldering matters. A bad connection can kill a whole component. Next time I would use a breadboard first to test before making anything permanent.</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d4" style="margin-top:1rem; text-align:center;">
+    <span class="badge badge-blue">The Unicorn HAT Mini display still works — it shows weather, time, and humidity. Just not from a live sensor anymore.</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 15 — WHY IT MATTERS (Jobs-style: zoom out)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s16">
   <div class="reveal reveal-d1">
     <div class="tagline">Why It Matters</div>
   </div>
@@ -895,9 +967,9 @@ sensor = adafruit_dht.DHT11(board.D4)
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 15 — WORKS CITED
+     SLIDE 16 — WORKS CITED
      ═══════════════════════════════════════════ -->
-<div class="slide" id="s15">
+<div class="slide" id="s17">
   <div class="reveal reveal-d1">
     <div class="tagline">Works Cited</div>
   </div>
@@ -914,9 +986,9 @@ sensor = adafruit_dht.DHT11(board.D4)
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 16 — CLOSING / Q&A
+     SLIDE 17 — CLOSING / Q&A
      ═══════════════════════════════════════════ -->
-<div class="slide" id="s16">
+<div class="slide" id="s18">
   <div class="reveal reveal-d1" style="text-align:center;">
     <div style="font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; color:var(--text); line-height:1.1;">
       Data Over<br>
