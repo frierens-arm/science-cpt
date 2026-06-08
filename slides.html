@@ -338,7 +338,7 @@
 <body>
 
 <!-- Slide Counter -->
-<div class="slide-counter" id="counter">01 / 15</div>
+<div class="slide-counter" id="counter">01 / 25</div>
 
 <!-- Navigation -->
 <div class="nav">
@@ -886,9 +886,391 @@ sensor = adafruit_dht.DHT11(board.D4)
 </div>
 
 <!-- ═══════════════════════════════════════════
-     SLIDE 15 — CLOSING / Q&A
+     SLIDE 15 — DEFINE THE PROBLEM
      ═══════════════════════════════════════════ -->
 <div class="slide" id="s15">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Define the Problem</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--peach); text-transform:uppercase; margin-bottom:0.8rem;">Q1 — What problem are we solving?</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          Making it easier for people to monitor temperature and humidity at home — in real time, from anywhere — without buying expensive equipment.
+        </div>
+      </div>
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--blue); text-transform:uppercase; margin-bottom:0.8rem;">Q2 — Who is impacted most?</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          People who want instant temperature and humidity information for a specific place — like homeowners with server rooms, people with plants that need certain conditions, or anyone who just wants to know what the air is actually like around them.
+        </div>
+      </div>
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--green); text-transform:uppercase; margin-bottom:0.8rem;">Q3 — What options exist today?</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          Temperature controllers that also monitor humidity — but they are expensive, they only work in one fixed location, and most of them do not let you check the data remotely.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 16 — EMPATHY (Who is at the heart?)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s16">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Empathy</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--mauve); text-transform:uppercase; margin-bottom:0.8rem;">Q4 — Who is at the heart of this problem?</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          Homeowners and renters who care about their indoor environment — people with electronics that generate heat, people with plants or pets that need certain conditions, and people who just want to understand the air in their home better.
+        </div>
+      </div>
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--sapphire); text-transform:uppercase; margin-bottom:0.8rem;">Q5 — Who is God calling us to be?</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          People who use knowledge to serve others — not just for ourselves, but to help the people around us live in healthier, safer spaces.
+        </div>
+      </div>
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--teal); text-transform:uppercase; margin-bottom:0.8rem;">Q6 — Who is God calling us to serve or help?</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          People who do not have the money for expensive monitoring systems — families, seniors, and anyone who would benefit from knowing their home environment but cannot afford commercial solutions.
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--yellow); text-transform:uppercase; margin-bottom:0.6rem;">Q7 — Listen to?</div>
+          <div style="font-size:1rem; color:var(--text); line-height:1.5;">
+            People who live in spaces with poor ventilation, mold issues, or overheating problems — they know something is wrong but do not have data to prove it.
+          </div>
+        </div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--red); text-transform:uppercase; margin-bottom:0.6rem;">Q8 — Who is impacted?</div>
+          <div style="font-size:1rem; color:var(--text); line-height:1.5;">
+            Anyone sharing the space — kids, seniors, pets, and anyone whose health is affected by air quality, humidity, or temperature.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1rem;">
+    <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem 2rem;">
+      <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--pink); text-transform:uppercase; margin-bottom:0.6rem;">Q9 — Who might be missing?</div>
+      <div style="font-size:1rem; color:var(--text); line-height:1.5;">
+        People who rent and cannot install permanent systems, and people in older buildings where the environment is harder to control — they are often left out of the conversation.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 17 — EMPATHY: See, Hear, Do, Feel
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s17">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Empathy — What does this person...</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; max-width:900px; width:100%;">
+      <div class="comp-card" style="border-color:rgba(140,170,238,0.3);">
+        <div class="comp-icon">👁️</div>
+        <div class="comp-title" style="color:var(--blue);">Q10 — See?</div>
+        <div class="comp-sub" style="text-align:left;">
+          A room that looks fine on the outside — but the air feels heavy or stale. Condensation on windows. Plants drying out. Electronics running hot. Things that look normal but are not.
+        </div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(166,209,137,0.3);">
+        <div class="comp-icon">👂</div>
+        <div class="comp-title" style="color:var(--green);">Q11 — Hear?</div>
+        <div class="comp-sub" style="text-align:left;">
+          Fans running all the time because it feels too warm. Complaints about the basement being damp. People saying "it feels weird in here" — but no one has numbers to back it up.
+        </div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(239,159,118,0.3);">
+        <div class="comp-icon">✋</div>
+        <div class="comp-title" style="color:var(--peach);">Q12 — Do?</div>
+        <div class="comp-sub" style="text-align:left;">
+          Open windows randomly. Move to a different room. Put a fan in the corner. Guess. Most people just deal with it because they do not have a way to measure what is actually happening.
+        </div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(202,158,230,0.3);">
+        <div class="comp-icon">💭</div>
+        <div class="comp-title" style="color:var(--mauve);">Q13 — Feel?</div>
+        <div class="comp-sub" style="text-align:left;">
+          Uncomfortable. Unsure if something is actually wrong or if it is just in their head. Frustrated that they cannot prove what they are experiencing — and helpless because they do not have the tools to find out.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 18 — LISTEN & LEARN
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s18">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Listen &amp; Learn</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--mauve); text-transform:uppercase; margin-bottom:0.6rem;">Q14 — What need?</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.5;">
+            People need affordable, accessible data about their home environment — not guesses, not feelings, actual numbers they can use to make decisions.
+          </div>
+        </div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--blue); text-transform:uppercase; margin-bottom:0.6rem;">Q15 — Most important to them?</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.5;">
+            Knowing their space is safe and healthy — especially for kids, seniors, or anyone with health conditions affected by air quality.
+          </div>
+        </div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--green); text-transform:uppercase; margin-bottom:0.6rem;">Q16 — Current options?</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.5;">
+            Expensive smart thermostats, basic thermometers you have to read in person, or just guessing based on how the air feels.
+          </div>
+        </div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--peach); text-transform:uppercase; margin-bottom:0.6rem;">Q17 — What is missing?</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.5;">
+            A cheap, simple way to check temperature and humidity from anywhere — without spending hundreds of dollars on a system that only works with one brand of devices.
+          </div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--teal); text-transform:uppercase; margin-bottom:0.6rem;">Q18 — Why use this solution?</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.5;">
+            Because it costs under $50, it uses open-source code, and it gives real data — not estimates. Anyone can build one.
+          </div>
+        </div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--sapphire); text-transform:uppercase; margin-bottom:0.6rem;">Q19 — Who to learn from?</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.5;">
+            People who manage server rooms, greenhouse owners, and anyone who already monitors their environment — they know what matters and what does not.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d3" style="margin-top:1rem;">
+    <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem 2rem;">
+      <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--lavender); text-transform:uppercase; margin-bottom:0.6rem;">Q20 — Research questions?</div>
+      <div style="font-size:0.95rem; color:var(--text); line-height:1.5;">
+        How much do temperature and humidity actually vary between rooms? What is a normal range? How do everyday things — like running a computer or boiling water — change the air in a room?
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 19 — IMAGINE POSSIBILITIES
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s19">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Imagine Possibilities</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--green); text-transform:uppercase; margin-bottom:0.8rem;">Q21 — What do people need most?</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          A simple, low-cost device that reads temperature and humidity and shows the data somewhere they can check it — like a small screen or a phone. Nothing complicated. Just the numbers, updated in real time.
+        </div>
+      </div>
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--mauve); text-transform:uppercase; margin-bottom:0.8rem;">Q22 — What solution are we moving forward with?</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          A Raspberry Pi with a BME280 sensor, running a Python script that logs data to a CSV file. The Pi displays the readings on a small LED matrix — the Unicorn HAT Mini — so you can see the numbers at a glance. Same pattern as commercial monitors, but instead of paying $200, it costs under $50 and you build it yourself.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 20 — BUILD A PROTOTYPE
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s20">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Build a Prototype</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--peach); text-transform:uppercase; margin-bottom:0.8rem;">Q23 — Step-by-step plan</div>
+        <div style="font-size:1.05rem; color:var(--text); line-height:1.8;">
+          <strong>1.</strong> Connect the BME280 sensor to the Raspberry Pi GPIO pins using jumper wires and a breadboard.<br>
+          <strong>2.</strong> Install the sensor library and write the Python logging script.<br>
+          <strong>3.</strong> Test the script at home — make sure it reads correctly and saves to CSV.<br>
+          <strong>4.</strong> Set up the Unicorn HAT Mini to display live readings.<br>
+          <strong>5.</strong> Take the device to each of the three locations and run the script for 5 minutes.<br>
+          <strong>6.</strong> Collect the CSV files and compare the data.
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--blue); text-transform:uppercase; margin-bottom:0.6rem;">Q24 — Materials needed</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.6;">
+            Raspberry Pi 5, BME280 sensor, breadboard, jumper wires, power bank, laptop for SSH, Unicorn HAT Mini for display.
+          </div>
+        </div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--red); text-transform:uppercase; margin-bottom:0.6rem;">Q25 — Anticipated problems</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.6;">
+            Sensor connection issues — loose wires are the most common problem. Power running out during outdoor testing. Script crashing if the sensor disconnects. Fix: secure all connections, bring a backup power bank, and add error handling to the code.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 21 — SHARE, TEST & IMPROVE (Feedback)
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s21">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Share, Test &amp; Improve</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--mauve); text-transform:uppercase; margin-bottom:0.8rem;">Q26 — Most helpful feedback</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          Someone suggested adding a timestamp to each reading — which was already in the code, but it made me realize the slide did not show it clearly. Another person said the procedure should explain WHY five minutes was chosen — because it gives 30 data points per location, which is enough to see a pattern without the sensor drifting.
+        </div>
+      </div>
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--green); text-transform:uppercase; margin-bottom:0.8rem;">Q27 — What feedback will change the prototype?</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          Adding a visible timestamp on the display so anyone watching knows when the last reading was taken. Also making the code more robust — if the sensor disconnects, it retries instead of crashing.
+        </div>
+      </div>
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--blue); text-transform:uppercase; margin-bottom:0.8rem;">Q28 — Test description</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          Place the sensor in three different microenvironments — pond edge, homelab, and hallway — for five minutes each. The script records temperature and humidity every ten seconds. After all three locations are tested, compare the CSV data to see how the readings differ.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 22 — SUCCESS CRITERIA & DATA ANALYSIS
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s22">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Success Criteria &amp; Data Analysis</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--yellow); text-transform:uppercase; margin-bottom:0.8rem;">Q31 — Success criteria</div>
+        <div style="font-size:1.15rem; color:var(--text); line-height:1.6;">
+          The test is successful if: (1) all three locations produce 30 readings each with no gaps, (2) the pond edge shows higher humidity than the hallway, and (3) the homelab shows higher temperature than the hallway. If the data matches the hypothesis, the experiment worked.
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--teal); text-transform:uppercase; margin-bottom:0.6rem;">Q32 — Analyze data</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.6;">
+            Calculate the average temperature and humidity for each location. Compare the three averages. Check if the numbers follow the predicted pattern — pond = humid, homelab = hot, hallway = in the middle.
+          </div>
+        </div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--pink); text-transform:uppercase; margin-bottom:0.6rem;">Q33 — Graphical representation</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.6;">
+            A grouped bar chart — one group per location, with two bars each (temperature and humidity). This makes it easy to compare all three locations side by side.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 23 — RESULTS & IMPROVEMENTS
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s23">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Results &amp; Improvements</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--green); text-transform:uppercase; margin-bottom:0.6rem;">Q34 — What was successful?</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.6;">
+            The sensor read consistently across all three locations. The CSV files were clean and complete — 30 readings each, no gaps. The Python script ran without errors at every location.
+          </div>
+        </div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--red); text-transform:uppercase; margin-bottom:0.6rem;">Q35 — What was unsuccessful?</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.6;">
+            The DHT11 sensor originally planned broke during setup — could not get it soldered properly. Had to switch to the BME280 and use a weather API for the display temperature. The outdoor reading near the pond was also affected by wind, which made the numbers jump around more than expected.
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--mauve); text-transform:uppercase; margin-bottom:0.8rem;">Q36 — Improvements based on tests</div>
+        <div style="font-size:1.05rem; color:var(--text); line-height:1.7;">
+          Use a wind shield for outdoor readings to stop the numbers from jumping. Add error handling in the code so a loose wire does not crash the whole script. Add a small screen or LED display so you can see the readings without needing a laptop. And test more than three locations to get a bigger picture of how microclimates work.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 24 — REFLECTION
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s24">
+  <div class="reveal reveal-d1">
+    <div class="tagline">Reflection</div>
+  </div>
+  <div class="reveal reveal-d2">
+    <div style="max-width:850px; width:100%;">
+      <div style="background:var(--base); border:1px solid var(--surface0); border-radius:20px; padding:2rem 2.5rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--peach); text-transform:uppercase; margin-bottom:0.8rem;">Q37 — Skills used in this challenge</div>
+        <div style="font-size:1.05rem; color:var(--text); line-height:1.7;">
+          <strong>Thinking skills:</strong> experimental design, identifying variables, forming a hypothesis.<br>
+          <strong>Technical skills:</strong> Python programming, sensor wiring, SSH, data logging.<br>
+          <strong>Communication skills:</strong> presenting data clearly, explaining science in simple terms.<br><br>
+          These skills apply to any project where you need to test an idea with real data — not just science.
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--blue); text-transform:uppercase; margin-bottom:0.6rem;">Q38 — Apply to life today</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.6;">
+            Design thinking is useful for any problem — not just school projects. When something is not working, define the problem first, listen to the people it affects, then build a solution and test it. That process works for things in everyday life.
+          </div>
+        </div>
+        <div style="background:var(--base); border:1px solid var(--surface0); border-radius:16px; padding:1.5rem;">
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.2em; color:var(--mauve); text-transform:uppercase; margin-bottom:0.6rem;">Q39 — Catholic Graduate Expectation</div>
+          <div style="font-size:0.95rem; color:var(--text); line-height:1.6;">
+            A responsible citizen who respects the environment and uses knowledge to serve others. This project is about making useful technology accessible to people who cannot afford expensive systems — that is basically what it means to use what you know to help.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 25 — CLOSING / Q&A
+     ═══════════════════════════════════════════ -->
+<div class="slide" id="s25">
   <div class="reveal reveal-d1" style="text-align:center;">
     <div style="font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; color:var(--text); line-height:1.1;">
       Data Over<br>
