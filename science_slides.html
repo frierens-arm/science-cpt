@@ -518,16 +518,21 @@
     <div class="tagline">Equipment</div>
   </div>
   <div class="reveal reveal-d2">
-    <div class="comparison-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="comparison-grid" style="grid-template-columns:repeat(4,1fr);">
       <div class="comp-card">
         <div class="comp-icon">&#128187;</div>
         <div class="comp-title">Raspberry Pi 5</div>
-        <div class="comp-sub">Runs Python script to read and log sensor data to CSV</div>
+        <div class="comp-sub">Runs Python scripts for sensor readings and live display</div>
       </div>
       <div class="comp-card">
         <div class="comp-icon">&#127777;&#65039;</div>
         <div class="comp-title">DHT11 Sensor</div>
         <div class="comp-sub">Digital sensor — measures temp and humidity via single-wire serial</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">&#127752;</div>
+        <div class="comp-title">Unicorn HAT Mini</div>
+        <div class="comp-sub">LED matrix display — shows weather, time, temp, humidity on the Pi</div>
       </div>
       <div class="comp-card">
         <div class="comp-icon">&#128268;</div>
@@ -856,6 +861,10 @@ sensor = adafruit_dht.DHT11(board.D4)
       <div class="comp-card" style="border-color:rgba(140,170,238,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
         <div style="font-size:0.75rem; color:var(--blue); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">What I'd Do Differently</div>
         <div style="font-size:0.9rem; color:var(--text);">Longer sampling (30+ min), multiple days, more locations, and a backup sensor to cross-check readings.</div>
+      </div>
+      <div class="comp-card" style="border-color:rgba(166,209,137,0.3); padding:1.2rem 1.5rem; min-width:250px; text-align:left;">
+        <div style="font-size:0.75rem; color:var(--green); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Display Note</div>
+        <div style="font-size:0.9rem; color:var(--text);">The DHT11 sensor module broke before the demo. The live display now uses OpenWeatherMap API for temperature instead.</div>
       </div>
     </div>
   </div>
